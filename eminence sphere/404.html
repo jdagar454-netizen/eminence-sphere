@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Page Not Found — Eminence Sphere</title>
+  <meta name="description" content="The page you're looking for could not be found." />
+  <meta name="robots" content="noindex" />
+  <link rel="icon" type="image/png" href="images/logo.png" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .error-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .error-page::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 50% at 50% 40%, rgba(201,168,76,0.06) 0%, transparent 70%);
+    }
+    .error-content { position: relative; z-index: 1; max-width: 560px; margin: 0 auto; }
+    .error-code {
+      font-family: var(--font-heading);
+      font-size: clamp(6rem, 20vw, 12rem);
+      font-weight: 800;
+      line-height: 1;
+      background: var(--gold-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+      opacity: 0.5;
+    }
+    .error-title {
+      font-family: var(--font-heading);
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+    .error-desc {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      line-height: 1.75;
+      margin-bottom: 2.5rem;
+    }
+    .error-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .error-logo { margin: 0 auto 2.5rem; }
+  </style>
+</head>
+<body>
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="images/logo.png" alt="Eminence Sphere Logo" style="height:48px;width:auto;" />
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html"        class="nav-link">Home</a></li>
+        <li><a href="about.html"        class="nav-link">About</a></li>
+        <li><a href="services.html"     class="nav-link">Services</a></li>
+        <li><a href="testimonials.html" class="nav-link">Testimonials</a></li>
+        <li><a href="contact.html"      class="nav-link nav-cta">Get in Touch</a></li>
+      </ul>
+      <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+  <nav class="nav-mobile" id="nav-mobile">
+    <a href="index.html"        class="nav-link">Home</a>
+    <a href="about.html"        class="nav-link">About</a>
+    <a href="services.html"     class="nav-link">Services</a>
+    <a href="testimonials.html" class="nav-link">Testimonials</a>
+    <a href="contact.html"      class="nav-link nav-cta">Get in Touch</a>
+  </nav>
+
+  <div class="error-page">
+    <div class="glow-orb glow-orb-gold" style="width:500px;height:500px;top:-100px;left:50%;transform:translateX(-50%);opacity:0.3;"></div>
+    <div class="error-content">
+      <img src="images/logo.png" alt="Eminence Sphere" class="error-logo" style="height:72px;width:auto;" />
+      <div class="error-code">404</div>
+      <h1 class="error-title">Page Not Found</h1>
+      <p class="error-desc">The page you're looking for doesn't exist or may have been moved. Let us help you find what you need.</p>
+      <div class="error-actions">
+        <a href="index.html" class="btn btn-primary" id="error-home">
+          Back to Home
+          <svg class="btn-icon" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.75 9h10.5M9.75 4.5L14.25 9l-4.5 4.5"/></svg>
+        </a>
+        <a href="contact.html" class="btn btn-outline" id="error-contact">Contact Us</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

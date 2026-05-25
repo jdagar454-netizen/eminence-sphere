@@ -1,0 +1,16 @@
+{
+  "name": "Eminence Sphere Consulting & Business Services",
+  "short_name": "Eminence Sphere",
+  "description": "Your trusted partner for strategic management, financial advisory, HR solutions, and digital transformation.",
+  "start_url": "/index.html",
+  "display": "browser",
+  "background_color": "#07091C",
+  "theme_color": "#07091C",
+  "icons": [
+    {
+      "src": "images/logo.png",
+      "sizes": "any",
+      "type": "image/png"
+    }
+  ]
+}
