@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recruitment Pipeline — Eminence Sphere</title>
+  <meta name="description" content="Recruitment Pipeline Admin Dashboard for Eminence Sphere Consulting &amp; Business Services." />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#07091C" />
+  <link rel="icon" type="image/png" href="images/logo.png" />
+  <link rel="apple-touch-icon" href="images/logo.png" />
+  <link rel="manifest" href="site.webmanifest" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/pages.css" />
+  <link rel="stylesheet" href="css/chatbot.css" />
+  <style>
+    .admin-dashboard {
+      padding-top: calc(var(--nav-height) + 3rem);
+      padding-bottom: 6rem;
+      min-height: 80vh;
+    }
+    
+    .admin-header-flex {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+      border-bottom: 1px solid var(--color-border);
+      padding-bottom: 1.5rem;
+    }
+
+    .admin-title-group h1 {
+      font-family: var(--font-heading);
+      font-size: 2.5rem;
+      font-weight: 700;
+    }
+
+    .admin-title-group p {
+      color: var(--text-secondary);
+      font-size: 0.9375rem;
+      margin-top: 0.25rem;
+    }
+
+    /* Metric Cards */
+    .admin-metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .metric-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .metric-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 4px; height: 100%;
+      background: var(--gold-gradient);
+    }
+
+    .metric-label {
+      font-size: 0.8125rem;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .metric-number {
+      font-family: var(--font-heading);
+      font-size: 2.25rem;
+      font-weight: 800;
+      color: var(--gold-light);
+      line-height: 1;
+    }
+
+    /* Filters */
+    .filter-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--color-border);
+      padding: 0.75rem 1.25rem;
+      border-radius: var(--radius-sm);
+    }
+
+    .filter-group {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .filter-label {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+
+    .filter-select {
+      background: var(--color-bg-2);
+      border: 1px solid var(--color-border);
+      color: var(--text-primary);
+      padding: 0.4rem 1rem;
+      border-radius: var(--radius-sm);
+      outline: none;
+      cursor: pointer;
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+    }
+
+    .filter-select:focus {
+      border-color: var(--gold-primary);
+    }
+
+    /* Candidate Grid */
+    .candidate-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .candidate-row-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: 1.75rem;
+      transition: all var(--transition-base);
+      display: grid;
+      grid-template-columns: 2fr 2fr 1.5fr 3fr 1fr;
+      align-items: center;
+      gap: 1.5rem;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .candidate-row-card:hover {
+      border-color: var(--color-border-hover);
+      background: var(--color-surface-hover);
+      box-shadow: 0 4px 20px rgba(201, 168, 76, 0.05);
+    }
+
+    .candidate-name-col {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .cand-name {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .cand-id {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-family: monospace;
+      letter-spacing: 0.05em;
+    }
+
+    .candidate-contact-col {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      font-size: 0.875rem;
+    }
+
+    .cand-email {
+      color: var(--gold-light);
+      word-break: break-all;
+    }
+
+    .cand-email:hover {
+      text-decoration: underline;
+    }
+
+    .cand-phone {
+      color: var(--text-secondary);
+    }
+
+    .candidate-role-col {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .cand-role {
+      font-weight: 600;
+      font-size: 0.9375rem;
+      color: var(--text-primary);
+    }
+
+    .cand-exp {
+      font-size: 0.8125rem;
+      color: var(--text-secondary);
+    }
+
+    .candidate-resume-col {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      max-height: 80px;
+      overflow-y: auto;
+      padding-right: 0.5rem;
+    }
+
+    .candidate-actions-col {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      align-items: flex-end;
+    }
+
+    .action-btn {
+      padding: 0.4rem 0.75rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-align: center;
+      cursor: pointer;
+      width: 100%;
+      border: 1px solid transparent;
+      transition: all var(--transition-fast);
+    }
+
+    .action-btn-download {
+      background: var(--gold-gradient);
+      color: var(--navy-deep);
+    }
+
+    .action-btn-download:hover {
+      opacity: 0.9;
+    }
+
+    .action-btn-delete {
+      background: transparent;
+      border-color: rgba(224, 92, 92, 0.4);
+      color: #e05c5c;
+    }
+
+    .action-btn-delete:hover {
+      background: rgba(224, 92, 92, 0.1);
+      border-color: #e05c5c;
+    }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      padding: 5rem 2rem;
+      background: var(--color-surface);
+      border: 1px dashed var(--color-border);
+      border-radius: var(--radius-lg);
+    }
+
+    .empty-state h3 {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .empty-state p {
+      color: var(--text-secondary);
+      font-size: 0.9375rem;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+      .candidate-row-card {
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+      }
+      
+      .candidate-resume-col {
+        grid-column: span 2;
+      }
+
+      .candidate-actions-col {
+        grid-column: span 2;
+        flex-direction: row;
+      }
+
+      .action-btn {
+        width:auto;
+        flex: 1;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .candidate-row-card {
+        grid-template-columns: 1fr;
+      }
+      
+      .candidate-resume-col {
+        grid-column: span 1;
+      }
+
+      .candidate-actions-col {
+        grid-column: span 1;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="images/logo.png" alt="Eminence Sphere Logo" style="height:48px;width:auto;" />
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html"        class="nav-link" data-page="index.html">Home</a></li>
+        <li><a href="about.html"        class="nav-link" data-page="about.html">About</a></li>
+        <li><a href="services.html"     class="nav-link" data-page="services.html">Services</a></li>
+        <li><a href="testimonials.html" class="nav-link" data-page="testimonials.html">Testimonials</a></li>
+        <li><a href="contact.html"      class="nav-link nav-cta" data-page="contact.html">Get in Touch</a></li>
+      </ul>
+      <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+  <nav class="nav-mobile" id="nav-mobile">
+    <a href="index.html"        class="nav-link" data-page="index.html">Home</a>
+    <a href="about.html"        class="nav-link" data-page="about.html">About</a>
+    <a href="services.html"     class="nav-link" data-page="services.html">Services</a>
+    <a href="testimonials.html" class="nav-link" data-page="testimonials.html">Testimonials</a>
+    <a href="contact.html"      class="nav-link nav-cta" data-page="contact.html">Get in Touch</a>
+  </nav>
+
+  <!-- ADMIN PIPELINE SECTION -->
+  <main class="admin-dashboard">
+    <div class="container">
+      
+      <!-- Dashboard Header -->
+      <div class="admin-header-flex">
+        <div class="admin-title-group">
+          <h1>Recruitment Pipeline</h1>
+          <p>Hiring admin console to view and manage candidate details collected by the AI recruitment chatbot.</p>
+        </div>
+        <button class="btn btn-outline" id="clear-all-btn" style="border-color:#e05c5c;color:#e05c5c;">
+          Clear All Candidates
+        </button>
+      </div>
+
+      <!-- Metrics Widgets -->
+      <div class="admin-metrics-grid">
+        <div class="metric-card">
+          <span class="metric-label">Total Applicants</span>
+          <span class="metric-number" id="metric-total">0</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-label">Engineering Candidates</span>
+          <span class="metric-number" id="metric-engineering">0</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-label">Consulting Candidates</span>
+          <span class="metric-number" id="metric-consulting">0</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-label">Last Submission</span>
+          <span class="metric-number" id="metric-last-date" style="font-size: 1.1rem; word-break: break-all; align-self: flex-start; margin-top: auto;">N/A</span>
+        </div>
+      </div>
+
+      <!-- Filter Controls -->
+      <div class="filter-bar">
+        <div class="filter-group">
+          <span class="filter-label">Filter by Position:</span>
+          <select class="filter-select" id="role-filter">
+            <option value="ALL">All Roles</option>
+            <option value="Business Consultant">Business Consultant</option>
+            <option value="Financial Advisor">Financial Advisor</option>
+            <option value="Operations Manager">Operations Manager</option>
+            <option value="Project Manager">Project Manager</option>
+            <option value="Marketing Strategist">Marketing Strategist</option>
+            <option value="Software Engineer">Software Engineer</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div style="font-size:0.875rem;color:var(--text-secondary);">
+          Candidate data saved locally.
+        </div>
+      </div>
+
+      <!-- Candidate Profiles List -->
+      <div class="candidate-list" id="candidates-container">
+        <!-- Rendered dynamically -->
+      </div>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="images/logo.png" alt="Eminence Sphere" style="height:52px;width:auto;margin-bottom:1rem;" />
+          <p>Partnering with ambitious businesses to achieve extraordinary results through strategic consulting, expert advisory, and transformative solutions.</p>
+        </div>
+        <div>
+          <div class="footer-col-title">Navigation</div>
+          <ul class="footer-links">
+            <li><a href="index.html"        class="footer-link">Home</a></li>
+            <li><a href="about.html"        class="footer-link">About Us</a></li>
+            <li><a href="services.html"     class="footer-link">Services</a></li>
+            <li><a href="testimonials.html" class="footer-link">Testimonials</a></li>
+            <li><a href="contact.html"      class="footer-link">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Services</div>
+          <ul class="footer-links">
+            <li><a href="services.html" class="footer-link">Management Strategy</a></li>
+            <li><a href="services.html" class="footer-link">Financial Advisory</a></li>
+            <li><a href="services.html" class="footer-link">HR &amp; Talent</a></li>
+            <li><a href="services.html" class="footer-link">Digital Transformation</a></li>
+            <li><a href="services.html" class="footer-link">Marketing &amp; Branding</a></li>
+            <li><a href="services.html" class="footer-link">Legal &amp; Compliance</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Get in Touch</div>
+          <div class="footer-contact-item">
+            <svg class="footer-contact-icon" viewBox="0 0 16 16"><path d="M8 1C4.7 1 2 3.7 2 7c0 4.4 6 9 6 9s6-4.6 6-9c0-3.3-2.7-6-6-6zm0 8a2 2 0 110-4 2 2 0 010 4z"/></svg>
+            <div class="footer-contact-text">123 Business Avenue,<br/>Financial District, City</div>
+          </div>
+          <div class="footer-contact-item">
+            <svg class="footer-contact-icon" viewBox="0 0 16 16"><path d="M2 3h12a1 1 0 011 1v8a1 1 0 01-1 1H2a1 1 0 01-1-1V4a1 1 0 011-1z"/><path d="M1 4l7 5 7-5"/></svg>
+            <div class="footer-contact-text">info@eminencesphere.com</div>
+          </div>
+          <div class="footer-contact-item">
+            <svg class="footer-contact-icon" viewBox="0 0 16 16"><path d="M14.5 11.5l-2-2a1.4 1.4 0 00-2 0l-1 1C8 10 6 8 5.5 6.5l1-1a1.4 1.4 0 000-2l-2-2a1.4 1.4 0 00-2 0C1 3 1 7.5 6.5 13S13 15 14.5 13.5a1.4 1.4 0 000-2z"/></svg>
+            <div class="footer-contact-text">+1 (555) 000-0000</div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-copy">© 2024 Eminence Sphere Consulting &amp; Business Services. All rights reserved. | <a href="pipeline.html" style="color: var(--gold-light); text-decoration: underline;">Recruitment Pipeline Dashboard</a></div>
+        <div class="footer-social">
+          <a href="#" class="social-link" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
+          <a href="#" class="social-link" aria-label="Twitter"><svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg></a>
+          <a href="#" class="social-link" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/chatbot.js"></script>
+  <script>
+    // ── Dashboard Controller ──
+    (function() {
+      'use strict';
+
+      const container = document.getElementById('candidates-container');
+      const filterSelect = document.getElementById('role-filter');
+      const clearBtn = document.getElementById('clear-all-btn');
+
+      // Metric elements
+      const mTotal = document.getElementById('metric-total');
+      const mEngineering = document.getElementById('metric-engineering');
+      const mConsulting = document.getElementById('metric-consulting');
+      const mLastDate = document.getElementById('metric-last-date');
+
+      // Escaping helper
+      function escapeHTML(str) {
+        if (!str) return '';
+        return str.replace(/[&<>'"]/g, 
+          tag => ({
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            "'": '&#39;',
+            '"': '&quot;'
+          }[tag] || tag)
+        );
+      }
+
+      function loadPipeline() {
+        const candidates = JSON.parse(localStorage.getItem('eminence_candidates')) || [];
+        const filterRole = filterSelect.value;
+
+        // 1. Calculate Metrics
+        mTotal.textContent = candidates.length;
+        mEngineering.textContent = candidates.filter(c => c.role === 'Software Engineer').length;
+        mConsulting.textContent = candidates.filter(c => c.role === 'Business Consultant').length;
+
+        if (candidates.length > 0) {
+          // Sort to find latest
+          const sorted = [...candidates].sort((a, b) => new Date(b.submittedAt) - new Date(a.submittedAt));
+          const latestDate = new Date(sorted[0].submittedAt);
+          mLastDate.textContent = latestDate.toLocaleDateString() + ' ' + latestDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        } else {
+          mLastDate.textContent = 'N/A';
+        }
+
+        // 2. Filter list
+        const filtered = filterRole === 'ALL' 
+          ? candidates 
+          : candidates.filter(c => c.role === filterRole);
+
+        // 3. Render
+        container.innerHTML = '';
+
+        if (filtered.length === 0) {
+          container.innerHTML = `
+            <div class="empty-state">
+              <h3>No Candidates Registered</h3>
+              <p>Applications submitted via the chatbot widget will appear here automatically.</p>
+            </div>
+          `;
+          return;
+        }
+
+        filtered.forEach(c => {
+          const card = document.createElement('div');
+          card.className = 'candidate-row-card';
+          card.innerHTML = `
+            <div class="candidate-name-col">
+              <span class="cand-name">${escapeHTML(c.name)}</span>
+              <span class="cand-id">ID: ${escapeHTML(c.id)}</span>
+            </div>
+            
+            <div class="candidate-contact-col">
+              <a href="mailto:${escapeHTML(c.email)}" class="cand-email">${escapeHTML(c.email)}</a>
+              <span class="cand-phone">${escapeHTML(c.phone)}</span>
+            </div>
+
+            <div class="candidate-role-col">
+              <span class="cand-role">${escapeHTML(c.role)}</span>
+              <span class="cand-exp">${escapeHTML(c.experience)} exp</span>
+            </div>
+
+            <div class="candidate-resume-col">
+              ${escapeHTML(c.resume)}
+            </div>
+
+            <div class="candidate-actions-col">
+              <button class="action-btn action-btn-download" data-id="${c.id}">Download JSON</button>
+              <button class="action-btn action-btn-delete" data-id="${c.id}">Delete</button>
+            </div>
+          `;
+
+          // Add button click listeners
+          card.querySelector('.action-btn-download').addEventListener('click', () => {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(c, null, 2));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", `Candidate_${c.name.replace(/\s+/g, '_')}_Profile.json`);
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+          });
+
+          card.querySelector('.action-btn-delete').addEventListener('click', () => {
+            if (confirm(`Are you sure you want to remove ${c.name}?`)) {
+              deleteCandidate(c.id);
+            }
+          });
+
+          container.appendChild(card);
+        });
+      }
+
+      function deleteCandidate(id) {
+        let candidates = JSON.parse(localStorage.getItem('eminence_candidates')) || [];
+        candidates = candidates.filter(c => c.id !== id);
+        localStorage.setItem('eminence_candidates', JSON.stringify(candidates));
+        loadPipeline();
+      }
+
+      // Clear all handler
+      clearBtn.addEventListener('click', () => {
+        if (confirm("Are you sure you want to clear the entire hiring database? This action cannot be undone.")) {
+          localStorage.removeItem('eminence_candidates');
+          loadPipeline();
+        }
+      });
+
+      // Filter select handler
+      filterSelect.addEventListener('change', loadPipeline);
+
+      // Load on initial execution
+      loadPipeline();
+
+      // Listen for localstorage updates from other pages
+      window.addEventListener('storage', (e) => {
+        if (e.key === 'eminence_candidates') {
+          loadPipeline();
+        }
+      });
+
+    })();
+  </script>
+</body>
+</html>
