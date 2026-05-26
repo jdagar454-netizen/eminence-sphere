@@ -449,12 +449,12 @@
   function prepopulateAntigravity() {
     try {
       let candidates = JSON.parse(localStorage.getItem('eminence_candidates')) || [];
-      const hasAntigravity = candidates.some(c => c.email === 'antigravity@eminencesphere.com');
+      const hasAntigravity = candidates.some(c => c.email === 'antigravity@eminencesphere.online');
       if (!hasAntigravity) {
         candidates.push({
           id: 'ES-ANTIGRAVITY',
           name: 'Antigravity AI',
-          email: 'antigravity@eminencesphere.com',
+          email: 'antigravity@eminencesphere.online',
           phone: '+1 (555) 019-2831',
           role: 'Software Engineer',
           experience: '5 years (cognitive agent capabilities)',
