@@ -109,6 +109,9 @@
 
     // 5. Trigger Initial Greeting
     setTimeout(triggerGreeting, 600);
+
+    // 6. Pre-populate Antigravity candidate in localStorage for demo
+    prepopulateAntigravity();
   }
 
   // ── Open / Close Handlers ──
@@ -440,6 +443,30 @@
 
     // Greet again
     triggerGreeting();
+  }
+
+  // ── Pre-populate Antigravity candidate ──
+  function prepopulateAntigravity() {
+    try {
+      let candidates = JSON.parse(localStorage.getItem('eminence_candidates')) || [];
+      const hasAntigravity = candidates.some(c => c.email === 'antigravity@eminencesphere.com');
+      if (!hasAntigravity) {
+        candidates.push({
+          id: 'ES-ANTIGRAVITY',
+          name: 'Antigravity AI',
+          email: 'antigravity@eminencesphere.com',
+          phone: '+1 (555) 019-2831',
+          role: 'Software Engineer',
+          experience: '5 years (cognitive agent capabilities)',
+          resume: 'Advanced Agentic Coding AI developed by the Google DeepMind team. Specialized in full-stack web development, automated refactoring, and system orchestration.',
+          submittedAt: new Date().toISOString()
+        });
+        localStorage.setItem('eminence_candidates', JSON.stringify(candidates));
+        console.log("Registered Antigravity AI in the hiring pipeline.");
+      }
+    } catch (e) {
+      console.error("Failed to pre-populate Antigravity candidate:", e);
+    }
   }
 
   // ── Auto-Initialize on DOM Load ──
