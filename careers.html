@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Careers &amp; Placements — Eminence Sphere</title>
+  <meta name="description" content="Explore active job openings and recruitment placements with Eminence Sphere's global enterprise partners including Amazon and Concentrix." />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Careers &amp; Placements — Eminence Sphere" />
+  <meta property="og:description" content="Explore active openings at leading companies like Amazon and Concentrix. Apply directly or use our AI Assistant." />
+  <meta property="og:image" content="images/logo.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Careers &amp; Placements — Eminence Sphere" />
+  <meta name="twitter:image" content="images/logo.png" />
+  <meta name="theme-color" content="#07091C" />
+  <link rel="icon" type="image/png" href="images/logo.png" />
+  <link rel="apple-touch-icon" href="images/logo.png" />
+  <link rel="manifest" href="site.webmanifest" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/pages.css" />
+  <link rel="stylesheet" href="css/chatbot.css" />
+  <style>
+    .careers-section {
+      padding-top: calc(var(--nav-height) + 3rem);
+      padding-bottom: 6rem;
+    }
+
+    .careers-intro {
+      max-width: 800px;
+      margin: 0 auto 4rem;
+      text-align: center;
+    }
+
+    .careers-intro p {
+      color: var(--text-secondary);
+      font-size: 1.0625rem;
+      line-height: 1.75;
+      margin-top: 1rem;
+    }
+
+    /* Job Grid */
+    .jobs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .job-card {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .job-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--color-border);
+      padding-bottom: 1.25rem;
+    }
+
+    .job-title-group h3 {
+      font-family: var(--font-heading);
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.3;
+    }
+
+    .job-company {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--gold-light);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: 0.25rem;
+    }
+
+    .job-badge {
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      background: rgba(201, 168, 76, 0.1);
+      border: 1px solid var(--color-border);
+      color: var(--gold-primary);
+    }
+
+    .job-badge-remote {
+      background: rgba(76, 217, 100, 0.1);
+      border-color: rgba(76, 217, 100, 0.3);
+      color: #4cd964;
+    }
+
+    .job-details-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.8125rem;
+      color: var(--text-secondary);
+    }
+
+    .job-detail-item {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .job-detail-item svg {
+      width: 14px;
+      height: 14px;
+      stroke: var(--gold-primary);
+      fill: none;
+      stroke-width: 2;
+    }
+
+    .job-description {
+      font-size: 0.9375rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .job-requirements-title {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.75rem;
+    }
+
+    .job-requirements {
+      list-style-type: none;
+      padding: 0;
+      margin: 0 0 2rem;
+      flex-grow: 1;
+    }
+
+    .job-requirement-item {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      position: relative;
+      padding-left: 1.25rem;
+      margin-bottom: 0.5rem;
+      line-height: 1.5;
+    }
+
+    .job-requirement-item::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: var(--gold-primary);
+      font-weight: 700;
+    }
+
+    .job-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: auto;
+    }
+
+    .job-btn {
+      flex: 1;
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-align: center;
+      transition: all var(--transition-base);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .job-btn-primary {
+      background: var(--gold-gradient);
+      color: var(--navy-deep);
+    }
+
+    .job-btn-primary:hover {
+      opacity: 0.9;
+      box-shadow: 0 4px 16px rgba(201, 168, 76, 0.25);
+    }
+
+    .job-btn-outline {
+      border: 1px solid var(--color-border);
+      color: var(--text-primary);
+      background: transparent;
+    }
+
+    .job-btn-outline:hover {
+      border-color: var(--gold-primary);
+      color: var(--gold-primary);
+      background: var(--gold-pale);
+    }
+
+    @media (max-width: 576px) {
+      .jobs-grid {
+        grid-template-columns: 1fr;
+      }
+      .job-actions {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="images/logo.png" alt="Eminence Sphere Logo" style="height:48px;width:auto;" />
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html"        class="nav-link" data-page="index.html">Home</a></li>
+        <li><a href="about.html"        class="nav-link" data-page="about.html">About</a></li>
+        <li><a href="services.html"     class="nav-link" data-page="services.html">Services</a></li>
+        <li><a href="testimonials.html" class="nav-link" data-page="testimonials.html">Testimonials</a></li>
+        <li><a href="careers.html"      class="nav-link" data-page="careers.html">Careers</a></li>
+        <li><a href="contact.html"      class="nav-link nav-cta" data-page="contact.html">Get in Touch</a></li>
+      </ul>
+      <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+  <nav class="nav-mobile" id="nav-mobile">
+    <a href="index.html"        class="nav-link" data-page="index.html">Home</a>
+    <a href="about.html"        class="nav-link" data-page="about.html">About</a>
+    <a href="services.html"     class="nav-link" data-page="services.html">Services</a>
+    <a href="testimonials.html" class="nav-link" data-page="testimonials.html">Testimonials</a>
+    <a href="careers.html"      class="nav-link" data-page="careers.html">Careers</a>
+    <a href="contact.html"      class="nav-link nav-cta" data-page="contact.html">Get in Touch</a>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="glow-orb glow-orb-gold" style="width:500px;height:500px;top:-150px;left:50%;transform:translateX(-50%);opacity:0.4;"></div>
+    <div class="container">
+      <div class="badge badge-gold" style="margin-bottom:1.25rem;">Hiring Opportunities</div>
+      <h1 class="heading-xl page-hero-title reveal">Careers &amp; <span class="text-gold">Placements</span></h1>
+      <p class="page-hero-subtitle reveal reveal-delay-1">Connect with industry leaders. We are currently sourcing candidates for placement at leading global enterprises.</p>
+    </div>
+  </section>
+
+  <!-- JOBS LISTINGS SECTION -->
+  <main class="careers-section">
+    <div class="container">
+      
+      <div class="careers-intro reveal">
+        <div class="section-tag">Active Roles</div>
+        <h2 class="heading-lg">Featured Positions</h2>
+        <div class="gold-divider"></div>
+        <p>Through our HR &amp; Talent Management partnerships, Eminence Sphere is sourcing candidates for the following vacancies. You can apply directly using the enterprise links below, or use our virtual AI recruitment assistant in the bottom right corner to quickly register in our talent pool.</p>
+      </div>
+
+      <div class="jobs-grid">
+        
+        <!-- Job 1: Amazon -->
+        <div class="card job-card reveal reveal-delay-1">
+          <div class="job-card-header">
+            <div class="job-title-group">
+              <h3>Virtual Customer Support Representative</h3>
+              <div class="job-company">Amazon (India)</div>
+            </div>
+            <span class="job-badge job-badge-remote">Remote</span>
+          </div>
+
+          <div class="job-details-list">
+            <div class="job-detail-item">
+              <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+              <span>Work from Home (India)</span>
+            </div>
+            <div class="job-detail-item">
+              <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+              <span>Full-Time</span>
+            </div>
+          </div>
+
+          <p class="job-description">
+            Join Amazon's world-class customer service team. In this virtual role, you will be the direct interface for millions of customers. You will resolve issues, answer product inquiries, and deliver exceptional, empathetic service across multiple channels including chat, email, and phone.
+          </p>
+
+          <div class="job-requirements-title">Key Requirements</div>
+          <ul class="job-requirements">
+            <li class="job-requirement-item">Excellent communication skills in written and verbal English.</li>
+            <li class="job-requirement-item">Strong analytical, problem-solving, and computer navigation skills.</li>
+            <li class="job-requirement-item">Quiet home office workspace with a stable internet connection.</li>
+            <li class="job-requirement-item">Willingness to work in rotational shifts (24/7 environment).</li>
+          </ul>
+
+          <div class="job-actions">
+            <a href="https://jobs.amazon.in/app#/jobDetail?jobId=JOB-IN-0000008155&locale=en-IN" target="_blank" rel="noopener noreferrer" class="job-btn job-btn-primary">
+              Apply on Amazon
+              <svg width="14" height="14" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h-6M15 3v6M15 3L9 9"/></svg>
+            </a>
+            <button class="job-btn job-btn-outline open-bot-btn">
+              Apply with AI Bot
+            </button>
+          </div>
+        </div>
+
+        <!-- Job 2: Concentrix -->
+        <div class="card job-card reveal reveal-delay-2">
+          <div class="job-card-header">
+            <div class="job-title-group">
+              <h3>Customer Support Advisor</h3>
+              <div class="job-company">Concentrix</div>
+            </div>
+            <span class="job-badge">Gurgaon</span>
+          </div>
+
+          <div class="job-details-list">
+            <div class="job-detail-item">
+              <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+              <span>Gurgaon, Haryana, India</span>
+            </div>
+            <div class="job-detail-item">
+              <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+              <span>Voice / Non-Voice</span>
+            </div>
+          </div>
+
+          <p class="job-description">
+            Concentrix Gurgaon is hiring customer support professionals. In this role, you will handle inquiries for international and domestic clients, providing product support, resolving customer issues, and ensuring a seamless, high-quality client experience. Both voice and chat/email support processes are available.
+          </p>
+
+          <div class="job-requirements-title">Key Requirements</div>
+          <ul class="job-requirements">
+            <li class="job-requirement-item">Good communication and customer handling skills.</li>
+            <li class="job-requirement-item">Graduates, undergraduates, and freshers are all welcome to apply.</li>
+            <li class="job-requirement-item">Flexibility to work in rotational shifts in a 24/7 environment.</li>
+            <li class="job-requirement-item">Comfortable working in Gurgaon offices (on-site).</li>
+          </ul>
+
+          <div class="job-actions">
+            <a href="https://www.concentrixcareers.com/apply-form/customer-support-advisors-gurgaon-voice-non-voice-process/personal-info" target="_blank" rel="noopener noreferrer" class="job-btn job-btn-primary">
+              Apply on Concentrix
+              <svg width="14" height="14" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h-6M15 3v6M15 3L9 9"/></svg>
+            </a>
+            <button class="job-btn job-btn-outline open-bot-btn">
+              Apply with AI Bot
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="images/logo.png" alt="Eminence Sphere" style="height:52px;width:auto;margin-bottom:1rem;" />
+          <p>Partnering with ambitious businesses to achieve extraordinary results through strategic consulting, expert advisory, and transformative solutions.</p>
+        </div>
+        <div>
+          <div class="footer-col-title">Navigation</div>
+          <ul class="footer-links">
+            <li><a href="index.html"        class="footer-link">Home</a></li>
+            <li><a href="about.html"        class="footer-link">About Us</a></li>
+            <li><a href="services.html"     class="footer-link">Services</a></li>
+            <li><a href="testimonials.html" class="footer-link">Testimonials</a></li>
+            <li><a href="careers.html"      class="footer-link">Careers</a></li>
+            <li><a href="contact.html"      class="footer-link">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Services</div>
+          <ul class="footer-links">
+            <li><a href="services.html" class="footer-link">Management Strategy</a></li>
+            <li><a href="services.html" class="footer-link">Financial Advisory</a></li>
+            <li><a href="services.html" class="footer-link">HR &amp; Talent</a></li>
+            <li><a href="services.html" class="footer-link">Digital Transformation</a></li>
+            <li><a href="services.html" class="footer-link">Marketing &amp; Branding</a></li>
+            <li><a href="services.html" class="footer-link">Legal &amp; Compliance</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Get in Touch</div>
+          <div class="footer-contact-item">
+            <svg class="footer-contact-icon" viewBox="0 0 16 16"><path d="M8 1C4.7 1 2 3.7 2 7c0 4.4 6 9 6 9s6-4.6 6-9c0-3.3-2.7-6-6-6zm0 8a2 2 0 110-4 2 2 0 010 4z"/></svg>
+            <div class="footer-contact-text">123 Business Avenue,<br/>Financial District, City</div>
+          </div>
+          <div class="footer-contact-item">
+            <svg class="footer-contact-icon" viewBox="0 0 16 16"><path d="M2 3h12a1 1 0 011 1v8a1 1 0 01-1 1H2a1 1 0 01-1-1V4a1 1 0 011-1z"/><path d="M1 4l7 5 7-5"/></svg>
+            <div class="footer-contact-text">info@eminencesphere.com</div>
+          </div>
+          <div class="footer-contact-item">
+            <svg class="footer-contact-icon" viewBox="0 0 16 16"><path d="M14.5 11.5l-2-2a1.4 1.4 0 00-2 0l-1 1C8 10 6 8 5.5 6.5l1-1a1.4 1.4 0 000-2l-2-2a1.4 1.4 0 00-2 0C1 3 1 7.5 6.5 13S13 15 14.5 13.5a1.4 1.4 0 000-2z"/></svg>
+            <div class="footer-contact-text">+1 (555) 000-0000</div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-copy">© 2024 Eminence Sphere Consulting &amp; Business Services. All rights reserved. | <a href="pipeline.html" style="color: var(--gold-light); text-decoration: underline;">Recruitment Pipeline</a></div>
+        <div class="footer-social">
+          <a href="#" class="social-link" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
+          <a href="#" class="social-link" aria-label="Twitter"><svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg></a>
+          <a href="#" class="social-link" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/chatbot.js"></script>
+  <script>
+    // ── Bind "Apply with AI Bot" buttons to launcher click ──
+    document.querySelectorAll('.open-bot-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const launcher = document.getElementById('es-chatbot-launcher');
+        const windowEl = document.getElementById('es-chatbot-window');
+        if (launcher && windowEl && !windowEl.classList.contains('open')) {
+          launcher.click();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
