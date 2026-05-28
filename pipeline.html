@@ -315,6 +315,103 @@
         grid-column: span 1;
       }
     }
+
+    /* Admin Login Screen styles */
+    .login-wrapper {
+      min-height: 50vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 0;
+    }
+
+    .login-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: 3rem 2.5rem;
+      width: 100%;
+      max-width: 440px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: var(--shadow-card);
+      position: relative;
+      overflow: hidden;
+      margin: 2rem auto;
+    }
+
+    .login-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--gold-gradient);
+    }
+
+    .login-card h2 {
+      font-family: var(--font-heading);
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+
+    .login-card p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      line-height: 1.5;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .login-card .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .login-card .form-label {
+      display: block;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+
+    .login-card .form-input {
+      width: 100%;
+      background: var(--color-bg-2);
+      border: 1px solid var(--color-border);
+      color: var(--text-primary);
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius-sm);
+      outline: none;
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      transition: border-color var(--transition-fast);
+    }
+
+    .login-card .form-input:focus {
+      border-color: var(--gold-primary);
+    }
+
+    .login-card .btn-primary {
+      width: 100%;
+      padding: 0.75rem;
+      font-weight: 600;
+      margin-top: 1rem;
+    }
+
+    .login-error {
+      color: #e05c5c;
+      font-size: 0.875rem;
+      margin-top: 1rem;
+      text-align: center;
+      background: rgba(224, 92, 92, 0.1);
+      padding: 0.75rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(224, 92, 92, 0.2);
+    }
   </style>
 </head>
 <body>
@@ -350,61 +447,86 @@
   <!-- ADMIN PIPELINE SECTION -->
   <main class="admin-dashboard">
     <div class="container">
-      
-      <!-- Dashboard Header -->
-      <div class="admin-header-flex">
-        <div class="admin-title-group">
-          <h1>Recruitment Pipeline</h1>
-          <p>Hiring admin console to view and manage candidate details collected by the AI recruitment chatbot.</p>
-        </div>
-        <button class="btn btn-outline" id="clear-all-btn" style="border-color:#e05c5c;color:#e05c5c;">
-          Clear All Candidates
-        </button>
-      </div>
 
-      <!-- Metrics Widgets -->
-      <div class="admin-metrics-grid">
-        <div class="metric-card">
-          <span class="metric-label">Total Applicants</span>
-          <span class="metric-number" id="metric-total">0</span>
-        </div>
-        <div class="metric-card">
-          <span class="metric-label">Engineering Candidates</span>
-          <span class="metric-number" id="metric-engineering">0</span>
-        </div>
-        <div class="metric-card">
-          <span class="metric-label">Consulting Candidates</span>
-          <span class="metric-number" id="metric-consulting">0</span>
-        </div>
-        <div class="metric-card">
-          <span class="metric-label">Last Submission</span>
-          <span class="metric-number" id="metric-last-date" style="font-size: 1.1rem; word-break: break-all; align-self: flex-start; margin-top: auto;">N/A</span>
+      <!-- Login Container -->
+      <div class="login-wrapper" id="login-container" style="display: block;">
+        <div class="login-card">
+          <h2>Admin Login</h2>
+          <p>Sign in to view and manage candidate details collected by the AI recruitment chatbot.</p>
+          <div class="form-group">
+            <label class="form-label" for="login-email">Email Address</label>
+            <input class="form-input" type="email" id="login-email" placeholder="admin@eminencesphere.online" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="login-password">Password</label>
+            <input class="form-input" type="password" id="login-password" placeholder="••••••••" />
+          </div>
+          <button class="btn btn-primary" id="login-btn">Sign In</button>
+          <div class="login-error" id="login-error" style="display: none;"></div>
         </div>
       </div>
 
-      <!-- Filter Controls -->
-      <div class="filter-bar">
-        <div class="filter-group">
-          <span class="filter-label">Filter by Position:</span>
-          <select class="filter-select" id="role-filter">
-            <option value="ALL">All Roles</option>
-            <option value="Business Consultant">Business Consultant</option>
-            <option value="Financial Advisor">Financial Advisor</option>
-            <option value="Operations Manager">Operations Manager</option>
-            <option value="Project Manager">Project Manager</option>
-            <option value="Marketing Strategist">Marketing Strategist</option>
-            <option value="Software Engineer">Software Engineer</option>
-            <option value="Other">Other</option>
-          </select>
+      <!-- Dashboard Content (hidden by default) -->
+      <div id="dashboard-content" style="display: none;">
+        <!-- Dashboard Header -->
+        <div class="admin-header-flex">
+          <div class="admin-title-group">
+            <h1>Recruitment Pipeline</h1>
+            <p>Hiring admin console to view and manage candidate details collected by the AI recruitment chatbot.</p>
+          </div>
+          <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+            <button class="btn btn-outline" id="clear-all-btn" style="border-color:#e05c5c;color:#e05c5c;">
+              Clear All Candidates
+            </button>
+            <button class="btn btn-primary" id="sign-out-btn" style="padding: 0.5rem 1.25rem;">
+              Sign Out
+            </button>
+          </div>
         </div>
-        <div style="font-size:0.875rem;color:var(--text-secondary);">
-          Candidate data saved locally.
-        </div>
-      </div>
 
-      <!-- Candidate Profiles List -->
-      <div class="candidate-list" id="candidates-container">
-        <!-- Rendered dynamically -->
+        <!-- Metrics Widgets -->
+        <div class="admin-metrics-grid">
+          <div class="metric-card">
+            <span class="metric-label">Total Applicants</span>
+            <span class="metric-number" id="metric-total">0</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-label">Support Representatives</span>
+            <span class="metric-number" id="metric-support">0</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-label">Virtual Support</span>
+            <span class="metric-number" id="metric-virtual">0</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-label">Last Submission</span>
+            <span class="metric-number" id="metric-last-date" style="font-size: 1.1rem; word-break: break-all; align-self: flex-start; margin-top: auto;">N/A</span>
+          </div>
+        </div>
+
+        <!-- Filter Controls -->
+        <div class="filter-bar">
+          <div class="filter-group">
+            <span class="filter-label">Filter by Position:</span>
+            <select class="filter-select" id="role-filter">
+              <option value="ALL">All Roles</option>
+              <option value="Customer Support Representative">Customer Support Rep</option>
+              <option value="Senior Customer Support Representative">Senior Customer Support Rep</option>
+              <option value="Virtual Support Representative">Virtual Support Rep</option>
+              <option value="Tech Support Specialist">Tech Support Specialist</option>
+              <option value="Operations Team Lead">Operations Team Lead</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div style="font-size:0.875rem;color:var(--text-secondary);">
+            Secure Cloud Database (Firebase)
+          </div>
+        </div>
+
+        <!-- Candidate Profiles List -->
+        <div class="candidate-list" id="candidates-container">
+          <!-- Rendered dynamically -->
+        </div>
       </div>
 
     </div>
@@ -469,6 +591,12 @@
     </div>
   </footer>
 
+  <!-- Firebase compat SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
+
   <script src="js/main.js"></script>
   <script src="js/chatbot.js"></script>
   <script>
@@ -476,15 +604,27 @@
     (function() {
       'use strict';
 
+      // Cache login elements
+      const loginContainer = document.getElementById('login-container');
+      const dashboardContent = document.getElementById('dashboard-content');
+      const loginEmail = document.getElementById('login-email');
+      const loginPassword = document.getElementById('login-password');
+      const loginBtn = document.getElementById('login-btn');
+      const loginError = document.getElementById('login-error');
+      const signOutBtn = document.getElementById('sign-out-btn');
+
+      // Cache dashboard elements
       const container = document.getElementById('candidates-container');
       const filterSelect = document.getElementById('role-filter');
       const clearBtn = document.getElementById('clear-all-btn');
 
       // Metric elements
       const mTotal = document.getElementById('metric-total');
-      const mEngineering = document.getElementById('metric-engineering');
-      const mConsulting = document.getElementById('metric-consulting');
+      const mSupport = document.getElementById('metric-support');
+      const mVirtual = document.getElementById('metric-virtual');
       const mLastDate = document.getElementById('metric-last-date');
+
+      let currentCandidates = [];
 
       // Escaping helper
       function escapeHTML(str) {
@@ -500,17 +640,115 @@
         );
       }
 
-      function loadPipeline() {
-        const candidates = JSON.parse(localStorage.getItem('eminence_candidates')) || [];
+      // Handle Authentication state changes
+      if (typeof firebase !== 'undefined') {
+        firebase.auth().onAuthStateChanged((user) => {
+          if (user) {
+            // User is signed in, show dashboard
+            loginContainer.style.display = 'none';
+            dashboardContent.style.display = 'block';
+            loginEmail.value = '';
+            loginPassword.value = '';
+            loginError.style.display = 'none';
+            
+            // Fetch candidates from firestore
+            fetchCandidatesFromFirestore();
+          } else {
+            // User is signed out, show login screen
+            loginContainer.style.display = 'block';
+            dashboardContent.style.display = 'none';
+          }
+        });
+      } else {
+        console.error("Firebase SDK was not loaded. Falling back to local mode (insecure).");
+        loginContainer.style.display = 'none';
+        dashboardContent.style.display = 'block';
+        loadPipelineLocal();
+      }
+
+      // Handle sign in submission
+      loginBtn.addEventListener('click', handleSignIn);
+      loginPassword.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') handleSignIn();
+      });
+
+      function handleSignIn() {
+        const email = loginEmail.value.trim();
+        const password = loginPassword.value;
+
+        if (!email || !password) {
+          showLoginError("Please enter both email and password.");
+          return;
+        }
+
+        loginBtn.disabled = true;
+        loginBtn.textContent = "Signing In...";
+        loginError.style.display = 'none';
+
+        firebase.auth().signInWithEmailAndPassword(email, password)
+          .then((userCredential) => {
+            console.log("Logged in successfully!");
+            loginBtn.disabled = false;
+            loginBtn.textContent = "Sign In";
+          })
+          .catch((error) => {
+            console.error("Authentication error:", error);
+            loginBtn.disabled = false;
+            loginBtn.textContent = "Sign In";
+            
+            // Format friendly error messages
+            let msg = "Invalid email or password.";
+            if (error.code === 'auth/invalid-email') msg = "Please enter a valid email address.";
+            if (error.code === 'auth/user-not-found') msg = "No administrator found with this email.";
+            if (error.code === 'auth/wrong-password') msg = "Incorrect password.";
+            showLoginError(msg);
+          });
+      }
+
+      function showLoginError(msg) {
+        loginError.textContent = msg;
+        loginError.style.display = 'block';
+      }
+
+      // Handle sign out
+      signOutBtn.addEventListener('click', () => {
+        firebase.auth().signOut()
+          .then(() => console.log("Signed out successfully."))
+          .catch(err => console.error("Error signing out:", err));
+      });
+
+      // Fetch candidates from Firestore
+      function fetchCandidatesFromFirestore() {
+        const db = firebase.firestore();
+        db.collection("candidates").orderBy("submittedAt", "desc")
+          .onSnapshot((querySnapshot) => {
+            const candidates = [];
+            querySnapshot.forEach((doc) => {
+              candidates.push(doc.data());
+            });
+            currentCandidates = candidates;
+            renderPipeline(candidates);
+          }, (error) => {
+            console.error("Error listening to candidates collection:", error);
+            loadPipelineLocal();
+          });
+      }
+
+      // Local storage fallback loader
+      function loadPipelineLocal() {
+        currentCandidates = JSON.parse(localStorage.getItem('eminence_candidates')) || [];
+        renderPipeline(currentCandidates);
+      }
+
+      function renderPipeline(candidates) {
         const filterRole = filterSelect.value;
 
         // 1. Calculate Metrics
         mTotal.textContent = candidates.length;
-        mEngineering.textContent = candidates.filter(c => c.role === 'Software Engineer').length;
-        mConsulting.textContent = candidates.filter(c => c.role === 'Business Consultant').length;
+        mSupport.textContent = candidates.filter(c => c.role === 'Customer Support Representative' || c.role === 'Senior Customer Support Representative').length;
+        mVirtual.textContent = candidates.filter(c => c.role === 'Virtual Support Representative').length;
 
         if (candidates.length > 0) {
-          // Sort to find latest
           const sorted = [...candidates].sort((a, b) => new Date(b.submittedAt) - new Date(a.submittedAt));
           const latestDate = new Date(sorted[0].submittedAt);
           mLastDate.textContent = latestDate.toLocaleDateString() + ' ' + latestDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
@@ -587,32 +825,41 @@
       }
 
       function deleteCandidate(id) {
-        let candidates = JSON.parse(localStorage.getItem('eminence_candidates')) || [];
-        candidates = candidates.filter(c => c.id !== id);
-        localStorage.setItem('eminence_candidates', JSON.stringify(candidates));
-        loadPipeline();
+        if (typeof firebase !== 'undefined' && firebase.apps.length > 0 && firebase.auth().currentUser) {
+          firebase.firestore().collection("candidates").doc(id).delete()
+            .then(() => console.log("Candidate deleted from Firestore."))
+            .catch(err => console.error("Error deleting document:", err));
+        } else {
+          let candidates = JSON.parse(localStorage.getItem('eminence_candidates')) || [];
+          candidates = candidates.filter(c => c.id !== id);
+          localStorage.setItem('eminence_candidates', JSON.stringify(candidates));
+          loadPipelineLocal();
+        }
       }
 
       // Clear all handler
       clearBtn.addEventListener('click', () => {
         if (confirm("Are you sure you want to clear the entire hiring database? This action cannot be undone.")) {
-          localStorage.removeItem('eminence_candidates');
-          loadPipeline();
+          if (typeof firebase !== 'undefined' && firebase.apps.length > 0 && firebase.auth().currentUser) {
+            const db = firebase.firestore();
+            db.collection("candidates").get().then((querySnapshot) => {
+              const batch = db.batch();
+              querySnapshot.forEach((doc) => {
+                batch.delete(doc.ref);
+              });
+              batch.commit()
+                .then(() => console.log("Hiring database successfully cleared in Firestore."))
+                .catch(err => console.error("Error committing delete batch:", err));
+            });
+          } else {
+            localStorage.removeItem('eminence_candidates');
+            loadPipelineLocal();
+          }
         }
       });
 
       // Filter select handler
-      filterSelect.addEventListener('change', loadPipeline);
-
-      // Load on initial execution
-      loadPipeline();
-
-      // Listen for localstorage updates from other pages
-      window.addEventListener('storage', (e) => {
-        if (e.key === 'eminence_candidates') {
-          loadPipeline();
-        }
-      });
+      filterSelect.addEventListener('change', () => renderPipeline(currentCandidates));
 
     })();
   </script>

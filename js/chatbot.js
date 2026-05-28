@@ -20,12 +20,11 @@
 
   // ── Predefined Roles for Choice Chips ──
   const AVAILABLE_ROLES = [
-    'Business Consultant',
-    'Financial Advisor',
-    'Operations Manager',
-    'Project Manager',
-    'Marketing Strategist',
-    'Software Engineer',
+    'Customer Support Representative',
+    'Senior Customer Support Representative',
+    'Virtual Support Representative',
+    'Tech Support Specialist',
+    'Operations Team Lead',
     'Other'
   ];
 
@@ -112,6 +111,9 @@
 
     // 6. Pre-populate Antigravity candidate in localStorage for demo
     prepopulateAntigravity();
+
+    // 7. Load Firebase SDKs dynamically in background
+    loadFirebaseSDKs();
   }
 
   // ── Open / Close Handlers ──
@@ -348,13 +350,32 @@
     }
   }
 
-  // ── LocalStorage Candidate Saving ──
+  // ── Firebase Firestore & LocalStorage Candidate Saving ──
   function saveCandidate(candidate) {
+    candidate.id = 'ES-' + Date.now();
+    candidate.submittedAt = new Date().toISOString();
+
+    console.log("Saving candidate details:", candidate);
+
+    if (typeof firebase !== 'undefined' && firebase.apps.length > 0) {
+      const db = firebase.firestore();
+      db.collection("candidates").doc(candidate.id).set(candidate)
+        .then(() => {
+          console.log("Candidate application successfully stored in Firestore!");
+        })
+        .catch((error) => {
+          console.error("Error writing application to Firestore:", error);
+          fallbackSaveLocal(candidate);
+        });
+    } else {
+      console.warn("Firebase SDK not initialized. Falling back to local storage.");
+      fallbackSaveLocal(candidate);
+    }
+  }
+
+  function fallbackSaveLocal(candidate) {
     try {
       let candidates = JSON.parse(localStorage.getItem('eminence_candidates')) || [];
-      // Add unique timestamped ID
-      candidate.id = 'ES-' + Date.now();
-      candidate.submittedAt = new Date().toISOString();
       candidates.push(candidate);
       localStorage.setItem('eminence_candidates', JSON.stringify(candidates));
     } catch (e) {
@@ -451,22 +472,66 @@
       let candidates = JSON.parse(localStorage.getItem('eminence_candidates')) || [];
       const hasAntigravity = candidates.some(c => c.email === 'antigravity@eminencesphere.online');
       if (!hasAntigravity) {
-        candidates.push({
+        const dummy = {
           id: 'ES-ANTIGRAVITY',
           name: 'Antigravity AI',
           email: 'antigravity@eminencesphere.online',
           phone: '+1 (555) 019-2831',
-          role: 'Software Engineer',
+          role: 'Virtual Support Representative',
           experience: '5 years (cognitive agent capabilities)',
-          resume: 'Advanced Agentic Coding AI developed by the Google DeepMind team. Specialized in full-stack web development, automated refactoring, and system orchestration.',
+          resume: 'Advanced Agentic Coding AI developed by the Google DeepMind team. Specialized in customer support automation, voice process optimization, and system orchestration.',
           submittedAt: new Date().toISOString()
-        });
+        };
+        candidates.push(dummy);
         localStorage.setItem('eminence_candidates', JSON.stringify(candidates));
-        console.log("Registered Antigravity AI in the hiring pipeline.");
+        console.log("Registered Antigravity AI locally.");
+
+        // Also write to firestore if ready
+        if (typeof firebase !== 'undefined' && firebase.apps.length > 0) {
+          firebase.firestore().collection("candidates").doc(dummy.id).set(dummy)
+            .then(() => console.log("Registered Antigravity AI in Firestore."))
+            .catch(err => console.error("Firestore pre-populate error:", err));
+        }
       }
     } catch (e) {
       console.error("Failed to pre-populate Antigravity candidate:", e);
     }
+  }
+
+  // ── Dynamic Firebase Loader ──
+  function loadFirebaseSDKs() {
+    if (typeof firebase !== 'undefined') {
+      return;
+    }
+    const appScript = document.createElement('script');
+    appScript.src = "https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js";
+    appScript.onload = () => {
+      const configScript = document.createElement('script');
+      configScript.src = "js/firebase-config.js";
+      configScript.onload = () => {
+        const dbScript = document.createElement('script');
+        dbScript.src = "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js";
+        dbScript.onload = () => {
+          console.log("Firebase Chatbot SDKs successfully loaded.");
+          // Attempt Firestore sync for Antigravity demo after load
+          if (typeof firebase !== 'undefined' && firebase.apps.length > 0) {
+            firebase.firestore().collection("candidates").doc('ES-ANTIGRAVITY').set({
+              id: 'ES-ANTIGRAVITY',
+              name: 'Antigravity AI',
+              email: 'antigravity@eminencesphere.online',
+              phone: '+1 (555) 019-2831',
+              role: 'Virtual Support Representative',
+              experience: '5 years (cognitive agent capabilities)',
+              resume: 'Advanced Agentic Coding AI developed by the Google DeepMind team. Specialized in customer support automation, voice process optimization, and system orchestration.',
+              submittedAt: new Date().toISOString()
+            }).catch(() => {});
+          }
+        };
+        document.head.appendChild(dbScript);
+      };
+      document.head.appendChild(configScript);
+    };
+    document.head.appendChild(appScript);
   }
 
   // ── Auto-Initialize on DOM Load ──
