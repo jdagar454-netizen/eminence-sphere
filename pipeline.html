@@ -457,8 +457,11 @@
             <label class="form-label" for="login-email">Email Address</label>
             <input class="form-input" type="email" id="login-email" placeholder="admin@eminencesphere.online" />
           </div>
-          <div class="form-group">
-            <label class="form-label" for="login-password">Password</label>
+          <div class="form-group" style="margin-bottom: 2rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+              <label class="form-label" for="login-password" style="margin-bottom: 0;">Password</label>
+              <a href="#" id="forgot-password-link" style="font-size: 0.75rem; color: var(--gold-light); text-decoration: none; font-weight: 500;">Forgot Password?</a>
+            </div>
             <input class="form-input" type="password" id="login-password" placeholder="••••••••" />
           </div>
           <button class="btn btn-primary" id="login-btn">Sign In</button>
@@ -672,12 +675,42 @@
         if (e.key === 'Enter') handleSignIn();
       });
 
+      // Handle forgot password flow
+      const forgotPasswordLink = document.getElementById('forgot-password-link');
+      if (forgotPasswordLink) {
+        forgotPasswordLink.addEventListener('click', (e) => {
+          e.preventDefault();
+          const email = loginEmail.value.trim();
+          if (!email) {
+            showLoginStatus("Please enter your email address first to reset the password.", true);
+            return;
+          }
+
+          forgotPasswordLink.style.pointerEvents = 'none';
+          forgotPasswordLink.textContent = "Sending link...";
+          loginError.style.display = 'none';
+
+          firebase.auth().sendPasswordResetEmail(email)
+            .then(() => {
+              showLoginStatus("Password reset email sent! Please check your inbox.", false);
+              forgotPasswordLink.style.pointerEvents = 'auto';
+              forgotPasswordLink.textContent = "Forgot Password?";
+            })
+            .catch((error) => {
+              console.error("Reset password error:", error);
+              showLoginStatus(`Failed to send reset email: ${error.code || error.message}`, true);
+              forgotPasswordLink.style.pointerEvents = 'auto';
+              forgotPasswordLink.textContent = "Forgot Password?";
+            });
+        });
+      }
+
       function handleSignIn() {
         const email = loginEmail.value.trim();
         const password = loginPassword.value;
 
         if (!email || !password) {
-          showLoginError("Please enter both email and password.");
+          showLoginStatus("Please enter both email and password.", true);
           return;
         }
 
@@ -704,13 +737,22 @@
             if (error.code === 'auth/invalid-credential') msg = "Invalid credentials. Please verify email/password.";
             
             // Append error details to assist in diagnosing issues
-            showLoginError(`${msg} (${error.code || error.message})`);
+            showLoginStatus(`${msg} (${error.code || error.message})`, true);
           });
       }
 
-      function showLoginError(msg) {
+      function showLoginStatus(msg, isError = true) {
         loginError.textContent = msg;
         loginError.style.display = 'block';
+        if (isError) {
+          loginError.style.color = '#e05c5c';
+          loginError.style.background = 'rgba(224, 92, 92, 0.1)';
+          loginError.style.borderColor = 'rgba(224, 92, 92, 0.2)';
+        } else {
+          loginError.style.color = '#c9a84c';
+          loginError.style.background = 'rgba(201, 168, 76, 0.1)';
+          loginError.style.borderColor = 'rgba(201, 168, 76, 0.2)';
+        }
       }
 
       // Handle sign out
