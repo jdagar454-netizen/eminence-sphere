@@ -27,6 +27,8 @@ export const metadata = {
   }
 };
 
+import Chatbot from '../components/Chatbot';
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
@@ -34,9 +36,7 @@ export default function RootLayout({ children }) {
         <Navbar />
         {children}
         <Footer />
-        
-        {/* Legacy Scripts - these will be refactored into React components later */}
-        <Script src="/js/chatbot.js" strategy="lazyOnload" />
+        <Chatbot />
       </body>
     </html>
   );
