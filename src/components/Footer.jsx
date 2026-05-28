@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Footer() {
   return (
@@ -7,7 +8,7 @@ export default function Footer() {
       <div className="container">
         <div className="footer-grid">
           <div className="footer-brand">
-            <img src="/images/logo.png" alt="Eminence Sphere" style={{ height: '52px', width: 'auto', marginBottom: '1rem' }} />
+            <Image src="/images/logo.png" alt="Eminence Sphere" width={200} height={52} style={{ height: '52px', width: 'auto', marginBottom: '1rem' }} />
             <p>Partnering with ambitious businesses to achieve extraordinary results through strategic consulting, expert advisory, and transformative solutions.</p>
           </div>
           <div>

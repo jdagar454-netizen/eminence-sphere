@@ -28,13 +28,36 @@ export const metadata = {
 };
 
 import Chatbot from '../components/Chatbot';
+import PageTransition from '../components/PageTransition';
+import { Inter } from 'next/font/google';
+
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
+});
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: 'Eminence Sphere',
+  image: 'https://eminencesphere.online/images/logo.png',
+  description: 'Eminence Sphere Consulting & Business Services — Your trusted partner for Resume Making, Job Recruitment, Career Consultation, Mock Interview & Training.',
+  url: 'https://eminencesphere.online',
+};
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" className={inter.variable}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body>
         <Navbar />
-        {children}
+        <PageTransition>{children}</PageTransition>
         <Footer />
         <Chatbot />
       </body>

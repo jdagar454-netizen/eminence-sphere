@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 
 export default function Navbar() {
@@ -26,7 +27,7 @@ export default function Navbar() {
       <nav className={`navbar${isScrolled ? ' scrolled' : ''}`} id="navbar">
         <div className="nav-inner">
           <Link href="/" className="nav-logo" id="nav-logo" onClick={closeMenu}>
-            <img src="/images/logo.png" alt="Eminence Sphere Logo" style={{ height: '48px', width: 'auto' }} />
+            <Image src="/images/logo.png" alt="Eminence Sphere Logo" width={200} height={48} style={{ height: '48px', width: 'auto' }} />
           </Link>
           <ul className="nav-links">
             <li><Link href="/" className={`nav-link ${isActive('/')}`}>Home</Link></li>

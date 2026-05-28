@@ -1,5 +1,6 @@
 "use client";
 import Link from 'next/link';
+import Image from 'next/image';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import HeroCanvas from '../components/HeroCanvas';
 import AnimatedCounter from '../components/AnimatedCounter';
@@ -251,7 +252,7 @@ export default function Home() {
               <div className="why-image-block">
                 <div className="why-image-pattern"></div>
                 <div className="why-image-center">
-                  <img src="/images/logo.png" alt="Eminence Sphere" style={{ width: '200px', height: 'auto', opacity: 0.85 }} />
+                  <Image src="/images/logo.png" alt="Eminence Sphere" width={200} height={48} style={{ width: '200px', height: 'auto', opacity: 0.85 }} />
                   <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', marginTop: '1rem' }}>Eminence Sphere<br/>Consulting &amp; Business Services</p>
                 </div>
                 <div className="why-badge-stack">

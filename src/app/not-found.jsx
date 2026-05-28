@@ -1,6 +1,7 @@
 "use client";
 import { useScrollReveal } from "../hooks/useScrollReveal";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function NotFound() {
   useScrollReveal();
@@ -55,7 +56,7 @@ export default function NotFound() {
       <main className="error-page">
         <div className="glow-orb glow-orb-gold" style={{ width: "500px", height: "500px", top: "-100px", left: "50%", transform: "translateX(-50%)", opacity: 0.3 }}></div>
         <div className="error-content">
-          <img src="/images/logo.png" alt="Eminence Sphere" className="error-logo" style={{ height: "72px", width: "auto" }} />
+          <Image src="/images/logo.png" alt="Eminence Sphere" className="error-logo" width={300} height={72} style={{ height: "72px", width: "auto" }} />
           <div className="error-code">404</div>
           <h1 className="error-title">Page Not Found</h1>
           <p className="error-desc">The page you're looking for doesn't exist or may have been moved. Let us help you find what you need.</p>
