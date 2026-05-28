@@ -453,6 +453,152 @@
       stroke-linejoin: round;
       transition: opacity 0.2s;
     }
+
+    /* ── 2-Step Auth: Step indicators ── */
+    .login-steps {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      margin-bottom: 2rem;
+    }
+
+    .step-dot {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 2px solid var(--color-border);
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+      flex-shrink: 0;
+    }
+
+    .step-dot.active {
+      border-color: var(--gold-primary);
+      background: var(--gold-gradient);
+      color: var(--navy-deep);
+    }
+
+    .step-dot.done {
+      border-color: #4caf82;
+      background: #4caf82;
+      color: #fff;
+    }
+
+    .step-line {
+      flex: 1;
+      height: 2px;
+      background: var(--color-border);
+      margin: 0 0.5rem;
+      transition: background 0.3s;
+      max-width: 60px;
+    }
+
+    .step-line.done { background: #4caf82; }
+
+    /* ── OTP Input boxes ── */
+    .otp-group {
+      display: flex;
+      gap: 0.6rem;
+      justify-content: center;
+      margin: 1.75rem 0 0.5rem;
+    }
+
+    .otp-box {
+      width: 48px;
+      height: 56px;
+      background: var(--color-bg-2);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      color: var(--text-primary);
+      font-size: 1.5rem;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      text-align: center;
+      outline: none;
+      transition: border-color 0.2s, transform 0.15s;
+      caret-color: transparent;
+    }
+
+    .otp-box:focus {
+      border-color: var(--gold-primary);
+      transform: translateY(-2px);
+    }
+
+    .otp-box.filled {
+      border-color: var(--gold-light);
+    }
+
+    .otp-box.shake {
+      animation: otp-shake 0.4s ease;
+    }
+
+    @keyframes otp-shake {
+      0%, 100% { transform: translateX(0); }
+      20%       { transform: translateX(-5px); }
+      40%       { transform: translateX(5px); }
+      60%       { transform: translateX(-4px); }
+      80%       { transform: translateX(4px); }
+    }
+
+    /* OTP timer */
+    .otp-timer {
+      text-align: center;
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+
+    .otp-timer span {
+      color: var(--gold-light);
+      font-weight: 600;
+      font-family: var(--font-heading);
+    }
+
+    .otp-timer span.expiring { color: #e05c5c; }
+
+    /* OTP footer links */
+    .otp-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1.25rem;
+      font-size: 0.8125rem;
+    }
+
+    .otp-footer a {
+      color: var(--gold-light);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .otp-footer a:hover { text-decoration: underline; }
+
+    /* Step slide animations */
+    .login-step {
+      transition: opacity 0.3s, transform 0.3s;
+    }
+
+    .login-step.slide-out {
+      opacity: 0;
+      transform: translateX(-24px);
+      pointer-events: none;
+    }
+
+    .login-step.slide-in {
+      animation: slideIn 0.35s ease forwards;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(24px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
   </style>
 </head>
 <body>
@@ -492,29 +638,66 @@
       <!-- Login Container -->
       <div class="login-wrapper" id="login-container" style="display: block;">
         <div class="login-card">
-          <h2>Admin Login</h2>
-          <p>Sign in to view and manage candidate details collected by the AI recruitment chatbot.</p>
-          <div class="form-group">
-            <label class="form-label" for="login-email">Email Address</label>
-            <input class="form-input" type="email" id="login-email" placeholder="admin@eminencesphere.online" />
+
+          <!-- Step indicators -->
+          <div class="login-steps">
+            <div class="step-dot active" id="step-dot-1">1</div>
+            <div class="step-line" id="step-line-1"></div>
+            <div class="step-dot" id="step-dot-2">2</div>
           </div>
-          <div class="form-group" style="margin-bottom: 2rem;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-              <label class="form-label" for="login-password" style="margin-bottom: 0;">Password</label>
-              <a href="#" id="forgot-password-link" style="font-size: 0.75rem; color: var(--gold-light); text-decoration: none; font-weight: 500;">Forgot Password?</a>
+
+          <!-- ── STEP 1: Credentials ── -->
+          <div id="login-step-1" class="login-step">
+            <h2>Admin Login</h2>
+            <p>Sign in to view and manage candidate details collected by the AI recruitment chatbot.</p>
+            <div class="form-group">
+              <label class="form-label" for="login-email">Email Address</label>
+              <input class="form-input" type="email" id="login-email" placeholder="admin@eminencesphere.online" />
             </div>
-            <div class="password-input-wrapper">
-              <input class="form-input" type="password" id="login-password" placeholder="••••••••" />
-              <button type="button" class="password-toggle-btn" id="password-toggle" aria-label="Show or hide password">
-                <!-- Eye icon (password hidden) -->
-                <svg id="eye-icon" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                <!-- Eye-off icon (password visible) -->
-                <svg id="eye-off-icon" viewBox="0 0 24 24" style="display:none;"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
-              </button>
+            <div class="form-group" style="margin-bottom: 2rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                <label class="form-label" for="login-password" style="margin-bottom: 0;">Password</label>
+                <a href="#" id="forgot-password-link" style="font-size: 0.75rem; color: var(--gold-light); text-decoration: none; font-weight: 500;">Forgot Password?</a>
+              </div>
+              <div class="password-input-wrapper">
+                <input class="form-input" type="password" id="login-password" placeholder="••••••••" />
+                <button type="button" class="password-toggle-btn" id="password-toggle" aria-label="Show or hide password">
+                  <svg id="eye-icon" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                  <svg id="eye-off-icon" viewBox="0 0 24 24" style="display:none;"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+                </button>
+              </div>
+            </div>
+            <button class="btn btn-primary" id="login-btn">Continue &rarr;</button>
+            <div class="login-error" id="login-error" style="display: none;"></div>
+          </div>
+
+          <!-- ── STEP 2: OTP Verification ── -->
+          <div id="login-step-2" class="login-step" style="display:none;">
+            <h2>Verify Identity</h2>
+            <p>A 6-digit code has been sent to<br><strong id="otp-email-display" style="color:var(--gold-light);"></strong></p>
+
+            <!-- 6 OTP digit boxes -->
+            <div class="otp-group" id="otp-group">
+              <input class="otp-box" id="otp-0" type="text" inputmode="numeric" maxlength="1" autocomplete="one-time-code" />
+              <input class="otp-box" id="otp-1" type="text" inputmode="numeric" maxlength="1" />
+              <input class="otp-box" id="otp-2" type="text" inputmode="numeric" maxlength="1" />
+              <input class="otp-box" id="otp-3" type="text" inputmode="numeric" maxlength="1" />
+              <input class="otp-box" id="otp-4" type="text" inputmode="numeric" maxlength="1" />
+              <input class="otp-box" id="otp-5" type="text" inputmode="numeric" maxlength="1" />
+            </div>
+
+            <!-- Countdown -->
+            <div class="otp-timer">Code expires in <span id="otp-countdown">5:00</span></div>
+
+            <button class="btn btn-primary" id="otp-verify-btn" style="margin-top:1.5rem;">Verify Code</button>
+            <div class="login-error" id="otp-error" style="display: none;"></div>
+
+            <div class="otp-footer">
+              <a href="#" id="otp-resend">Resend code</a>
+              <a href="#" id="otp-back">&larr; Back</a>
             </div>
           </div>
-          <button class="btn btn-primary" id="login-btn">Sign In</button>
-          <div class="login-error" id="login-error" style="display: none;"></div>
+
         </div>
       </div>
 
@@ -648,181 +831,376 @@
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
   <script src="js/firebase-config.js?v=2"></script>
+  <!-- EmailJS for OTP delivery -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
   <script src="js/main.js"></script>
   <script src="js/chatbot.js"></script>
   <script>
+    // ════════════════════════════════════════════════
+    // EMAILJS CONFIG — fill these in after setup
+    // ════════════════════════════════════════════════
+    const EMAILJS_PUBLIC_KEY  = 'YOUR_EMAILJS_PUBLIC_KEY';   // e.g. 'abc123XYZ'
+    const EMAILJS_SERVICE_ID  = 'YOUR_EMAILJS_SERVICE_ID';   // e.g. 'service_xxxxxx'
+    const EMAILJS_TEMPLATE_ID = 'YOUR_EMAILJS_TEMPLATE_ID';  // e.g. 'template_xxxxxx'
+    // ════════════════════════════════════════════════
+
     // ── Dashboard Controller ──
     (function() {
       'use strict';
 
-      // Cache login elements
-      const loginContainer = document.getElementById('login-container');
-      const dashboardContent = document.getElementById('dashboard-content');
-      const loginEmail = document.getElementById('login-email');
-      const loginPassword = document.getElementById('login-password');
-      const loginBtn = document.getElementById('login-btn');
-      const loginError = document.getElementById('login-error');
-      const signOutBtn = document.getElementById('sign-out-btn');
+      // ── 2-Step auth state ──
+      let otpVerified   = false;   // true once OTP passed
+      let pendingOTP    = null;    // current 6-digit code (in-memory only)
+      let otpExpiry     = 0;       // timestamp when OTP expires
+      let otpTimerID    = null;    // interval id for countdown
+      let currentUser   = null;    // Firebase user after step 1
 
-      // Cache dashboard elements
-      const container = document.getElementById('candidates-container');
+      // ── DOM refs ──
+      const loginContainer  = document.getElementById('login-container');
+      const dashboardContent= document.getElementById('dashboard-content');
+      const loginEmail      = document.getElementById('login-email');
+      const loginPassword   = document.getElementById('login-password');
+      const loginBtn        = document.getElementById('login-btn');
+      const loginError      = document.getElementById('login-error');
+      const signOutBtn      = document.getElementById('sign-out-btn');
+      const step1El         = document.getElementById('login-step-1');
+      const step2El         = document.getElementById('login-step-2');
+      const otpEmailDisplay = document.getElementById('otp-email-display');
+      const otpVerifyBtn    = document.getElementById('otp-verify-btn');
+      const otpErrorEl      = document.getElementById('otp-error');
+      const otpCountdown    = document.getElementById('otp-countdown');
+      const otpBoxes        = Array.from(document.querySelectorAll('.otp-box'));
+      const stepDot1        = document.getElementById('step-dot-1');
+      const stepDot2        = document.getElementById('step-dot-2');
+      const stepLine1       = document.getElementById('step-line-1');
+
+      // Dashboard elements
+      const container  = document.getElementById('candidates-container');
       const filterSelect = document.getElementById('role-filter');
-      const clearBtn = document.getElementById('clear-all-btn');
-
-      // Metric elements
-      const mTotal = document.getElementById('metric-total');
-      const mSupport = document.getElementById('metric-support');
-      const mVirtual = document.getElementById('metric-virtual');
-      const mLastDate = document.getElementById('metric-last-date');
+      const clearBtn   = document.getElementById('clear-all-btn');
+      const mTotal     = document.getElementById('metric-total');
+      const mSupport   = document.getElementById('metric-support');
+      const mVirtual   = document.getElementById('metric-virtual');
+      const mLastDate  = document.getElementById('metric-last-date');
 
       let currentCandidates = [];
 
-      // Escaping helper
+      // ── HTML escape helper ──
       function escapeHTML(str) {
         if (!str) return '';
-        return str.replace(/[&<>'"]/g, 
-          tag => ({
-            '&': '&amp;',
-            '<': '&lt;',
-            '>': '&gt;',
-            "'": '&#39;',
-            '"': '&quot;'
-          }[tag] || tag)
-        );
+        return str.replace(/[&<>'"]/g,
+          tag => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[tag] || tag));
       }
 
-      // Handle Authentication state changes
+      // ── Auth state observer ──
       if (typeof firebase !== 'undefined') {
         firebase.auth().onAuthStateChanged((user) => {
           if (user) {
-            // User is signed in, show dashboard
-            loginContainer.style.display = 'none';
-            dashboardContent.style.display = 'block';
-            loginEmail.value = '';
-            loginPassword.value = '';
-            loginError.style.display = 'none';
-            
-            // Fetch candidates from firestore
-            fetchCandidatesFromFirestore();
+            currentUser = user;
+            if (otpVerified) {
+              showDashboard();
+            } else {
+              // Kick off OTP step
+              initiateOTPStep(user);
+            }
           } else {
-            // User is signed out, show login screen
-            loginContainer.style.display = 'block';
-            dashboardContent.style.display = 'none';
+            currentUser = null;
+            otpVerified = false;
+            pendingOTP  = null;
+            clearOTPTimer();
+            showStep1();
           }
         });
       } else {
-        console.error("Firebase SDK was not loaded. Falling back to local mode (insecure).");
+        console.error('Firebase SDK not loaded. Falling back to local mode.');
         loginContainer.style.display = 'none';
         dashboardContent.style.display = 'block';
         loadPipelineLocal();
       }
 
-      // Handle sign in submission
+      // ══════════════════════════════════
+      // STEP 1 — credentials
+      // ══════════════════════════════════
       loginBtn.addEventListener('click', handleSignIn);
       loginPassword.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') handleSignIn();
       });
 
-      // Handle forgot password flow
+      function handleSignIn() {
+        const email    = loginEmail.value.trim();
+        const password = loginPassword.value;
+        if (!email || !password) {
+          showLoginStatus('Please enter both email and password.', true);
+          return;
+        }
+        loginBtn.disabled = true;
+        loginBtn.textContent = 'Verifying...';
+        loginError.style.display = 'none';
+
+        firebase.auth().signInWithEmailAndPassword(email, password)
+          .then(() => {
+            loginBtn.disabled = false;
+            loginBtn.innerHTML = 'Continue &rarr;';
+            // onAuthStateChanged will fire → initiateOTPStep()
+          })
+          .catch((error) => {
+            loginBtn.disabled = false;
+            loginBtn.innerHTML = 'Continue &rarr;';
+            let msg = 'Invalid email or password.';
+            if (error.code === 'auth/invalid-email')       msg = 'Please enter a valid email address.';
+            if (error.code === 'auth/user-not-found')      msg = 'No administrator found with this email.';
+            if (error.code === 'auth/wrong-password')      msg = 'Incorrect password. Please try again.';
+            if (error.code === 'auth/invalid-credential')  msg = 'Invalid credentials. Please try again.';
+            showLoginStatus(`${msg}`, true);
+          });
+      }
+
+      // Forgot password
       const forgotPasswordLink = document.getElementById('forgot-password-link');
       if (forgotPasswordLink) {
         forgotPasswordLink.addEventListener('click', (e) => {
           e.preventDefault();
           const email = loginEmail.value.trim();
-          if (!email) {
-            showLoginStatus("Please enter your email address first to reset the password.", true);
-            return;
-          }
-
+          if (!email) { showLoginStatus('Enter your email above first.', true); return; }
           forgotPasswordLink.style.pointerEvents = 'none';
-          forgotPasswordLink.textContent = "Sending link...";
-          loginError.style.display = 'none';
-
+          forgotPasswordLink.textContent = 'Sending...';
           firebase.auth().sendPasswordResetEmail(email)
             .then(() => {
-              showLoginStatus("Password reset email sent! Please check your inbox.", false);
+              showLoginStatus('Reset email sent! Check your inbox.', false);
               forgotPasswordLink.style.pointerEvents = 'auto';
-              forgotPasswordLink.textContent = "Forgot Password?";
+              forgotPasswordLink.textContent = 'Forgot Password?';
             })
-            .catch((error) => {
-              console.error("Reset password error:", error);
-              showLoginStatus(`Failed to send reset email: ${error.code || error.message}`, true);
+            .catch((err) => {
+              showLoginStatus(`Could not send reset email: ${err.code}`, true);
               forgotPasswordLink.style.pointerEvents = 'auto';
-              forgotPasswordLink.textContent = "Forgot Password?";
+              forgotPasswordLink.textContent = 'Forgot Password?';
             });
         });
       }
 
-      // Handle password show/hide toggle
+      // Password visibility toggle
       const passwordToggleBtn = document.getElementById('password-toggle');
-      const eyeIcon = document.getElementById('eye-icon');
+      const eyeIcon    = document.getElementById('eye-icon');
       const eyeOffIcon = document.getElementById('eye-off-icon');
       if (passwordToggleBtn) {
         passwordToggleBtn.addEventListener('click', () => {
-          const isHidden = loginPassword.type === 'password';
-          loginPassword.type = isHidden ? 'text' : 'password';
-          eyeIcon.style.display    = isHidden ? 'none'  : 'block';
-          eyeOffIcon.style.display = isHidden ? 'block' : 'none';
+          const hidden = loginPassword.type === 'password';
+          loginPassword.type = hidden ? 'text' : 'password';
+          eyeIcon.style.display    = hidden ? 'none'  : 'block';
+          eyeOffIcon.style.display = hidden ? 'block' : 'none';
           loginPassword.focus();
         });
-      }
-
-      function handleSignIn() {
-        const email = loginEmail.value.trim();
-        const password = loginPassword.value;
-
-        if (!email || !password) {
-          showLoginStatus("Please enter both email and password.", true);
-          return;
-        }
-
-        loginBtn.disabled = true;
-        loginBtn.textContent = "Signing In...";
-        loginError.style.display = 'none';
-
-        firebase.auth().signInWithEmailAndPassword(email, password)
-          .then((userCredential) => {
-            console.log("Logged in successfully!");
-            loginBtn.disabled = false;
-            loginBtn.textContent = "Sign In";
-          })
-          .catch((error) => {
-            console.error("Authentication error:", error);
-            loginBtn.disabled = false;
-            loginBtn.textContent = "Sign In";
-            
-            // Format friendly error messages
-            let msg = "Invalid email or password.";
-            if (error.code === 'auth/invalid-email') msg = "Please enter a valid email address.";
-            if (error.code === 'auth/user-not-found') msg = "No administrator found with this email.";
-            if (error.code === 'auth/wrong-password') msg = "Incorrect password.";
-            if (error.code === 'auth/invalid-credential') msg = "Invalid credentials. Please verify email/password.";
-            
-            // Append error details to assist in diagnosing issues
-            showLoginStatus(`${msg} (${error.code || error.message})`, true);
-          });
       }
 
       function showLoginStatus(msg, isError = true) {
         loginError.textContent = msg;
         loginError.style.display = 'block';
-        if (isError) {
-          loginError.style.color = '#e05c5c';
-          loginError.style.background = 'rgba(224, 92, 92, 0.1)';
-          loginError.style.borderColor = 'rgba(224, 92, 92, 0.2)';
-        } else {
-          loginError.style.color = '#c9a84c';
-          loginError.style.background = 'rgba(201, 168, 76, 0.1)';
-          loginError.style.borderColor = 'rgba(201, 168, 76, 0.2)';
+        loginError.style.color      = isError ? '#e05c5c' : '#c9a84c';
+        loginError.style.background = isError ? 'rgba(224,92,92,0.1)'   : 'rgba(201,168,76,0.1)';
+        loginError.style.borderColor= isError ? 'rgba(224,92,92,0.2)'   : 'rgba(201,168,76,0.2)';
+      }
+
+      function showStep1() {
+        loginContainer.style.display = 'block';
+        dashboardContent.style.display = 'none';
+        step1El.style.display = 'block';
+        step2El.style.display = 'none';
+        stepDot1.className = 'step-dot active';
+        stepDot2.className = 'step-dot';
+        stepLine1.className = 'step-line';
+      }
+
+      // ══════════════════════════════════
+      // STEP 2 — OTP verification
+      // ══════════════════════════════════
+      function initiateOTPStep(user) {
+        // Generate 6-digit OTP
+        pendingOTP = String(Math.floor(100000 + Math.random() * 900000));
+        otpExpiry  = Date.now() + 5 * 60 * 1000; // 5 minutes
+
+        // Update step UI
+        step1El.classList.add('slide-out');
+        setTimeout(() => {
+          step1El.style.display = 'none';
+          step1El.classList.remove('slide-out');
+          step2El.style.display = 'block';
+          step2El.classList.add('slide-in');
+          otpBoxes[0].focus();
+        }, 300);
+
+        stepDot1.className = 'step-dot done';
+        stepDot1.innerHTML = '&#10003;';
+        stepDot2.className = 'step-dot active';
+        stepLine1.className = 'step-line done';
+
+        // Show masked email
+        const parts  = user.email.split('@');
+        const masked = parts[0].substring(0, 3) + '***@' + parts[1];
+        otpEmailDisplay.textContent = masked;
+
+        // Start countdown
+        startOTPTimer();
+
+        // Send email
+        sendOTPEmail(user.email, pendingOTP);
+      }
+
+      function sendOTPEmail(toEmail, code) {
+        if (EMAILJS_PUBLIC_KEY === 'YOUR_EMAILJS_PUBLIC_KEY') {
+          // EmailJS not configured — show code in console (dev mode only)
+          console.warn('⚠️ EmailJS not configured. OTP code (dev only):', code);
+          showOTPStatus('EmailJS not set up — OTP printed in browser console (F12).', false);
+          return;
         }
+        emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+        emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+          to_email: toEmail,
+          otp_code: code,
+          expiry_mins: '5'
+        }).then(() => {
+          showOTPStatus('Code sent! Check your email inbox.', false);
+        }).catch((err) => {
+          console.error('EmailJS error:', err);
+          showOTPStatus('Could not send email. OTP is in browser console (F12).', false);
+          console.warn('OTP fallback (dev):', code);
+        });
+      }
+
+      function startOTPTimer() {
+        clearOTPTimer();
+        otpTimerID = setInterval(() => {
+          const remaining = Math.max(0, otpExpiry - Date.now());
+          const mins = Math.floor(remaining / 60000);
+          const secs = Math.floor((remaining % 60000) / 1000);
+          otpCountdown.textContent = `${mins}:${secs.toString().padStart(2,'0')}`;
+          if (remaining <= 60000) otpCountdown.className = 'expiring';
+          else otpCountdown.className = '';
+          if (remaining === 0) {
+            clearOTPTimer();
+            showOTPStatus('Code expired. Click Resend to get a new one.', true);
+            otpVerifyBtn.disabled = true;
+          }
+        }, 1000);
+      }
+
+      function clearOTPTimer() {
+        if (otpTimerID) { clearInterval(otpTimerID); otpTimerID = null; }
+      }
+
+      // OTP box keyboard UX — auto-advance, backspace, paste
+      otpBoxes.forEach((box, i) => {
+        box.addEventListener('input', (e) => {
+          const val = e.target.value.replace(/\D/g, '');
+          box.value = val ? val[0] : '';
+          box.classList.toggle('filled', !!box.value);
+          if (val && i < 5) otpBoxes[i + 1].focus();
+          if (getOTPValue().length === 6) verifyOTP();
+        });
+        box.addEventListener('keydown', (e) => {
+          if (e.key === 'Backspace' && !box.value && i > 0) {
+            otpBoxes[i - 1].value = '';
+            otpBoxes[i - 1].classList.remove('filled');
+            otpBoxes[i - 1].focus();
+          }
+          if (e.key === 'ArrowLeft'  && i > 0) otpBoxes[i - 1].focus();
+          if (e.key === 'ArrowRight' && i < 5) otpBoxes[i + 1].focus();
+        });
+        // Handle paste into first box
+        box.addEventListener('paste', (e) => {
+          e.preventDefault();
+          const text = (e.clipboardData || window.clipboardData).getData('text').replace(/\D/g,'').slice(0,6);
+          text.split('').forEach((ch, idx) => {
+            if (otpBoxes[idx]) {
+              otpBoxes[idx].value = ch;
+              otpBoxes[idx].classList.add('filled');
+            }
+          });
+          if (text.length === 6) verifyOTP();
+          else if (otpBoxes[text.length]) otpBoxes[text.length].focus();
+        });
+      });
+
+      otpVerifyBtn.addEventListener('click', verifyOTP);
+
+      function getOTPValue() {
+        return otpBoxes.map(b => b.value).join('');
+      }
+
+      function verifyOTP() {
+        const entered = getOTPValue();
+        if (entered.length < 6) {
+          showOTPStatus('Please enter all 6 digits.', true);
+          return;
+        }
+        if (Date.now() > otpExpiry) {
+          showOTPStatus('Code expired. Click Resend to get a new one.', true);
+          return;
+        }
+        if (entered === pendingOTP) {
+          // ✅ OTP correct
+          otpVerified = true;
+          pendingOTP  = null;
+          clearOTPTimer();
+          showDashboard();
+        } else {
+          // ❌ Wrong code — shake boxes
+          otpBoxes.forEach(b => {
+            b.classList.remove('shake');
+            void b.offsetWidth; // reflow to restart animation
+            b.classList.add('shake');
+          });
+          showOTPStatus('Incorrect code. Please try again.', true);
+          otpBoxes.forEach(b => { b.value=''; b.classList.remove('filled','shake'); });
+          otpBoxes[0].focus();
+        }
+      }
+
+      function showOTPStatus(msg, isError) {
+        otpErrorEl.textContent = msg;
+        otpErrorEl.style.display = 'block';
+        otpErrorEl.style.color      = isError ? '#e05c5c' : '#c9a84c';
+        otpErrorEl.style.background = isError ? 'rgba(224,92,92,0.1)'   : 'rgba(201,168,76,0.1)';
+        otpErrorEl.style.borderColor= isError ? 'rgba(224,92,92,0.2)'   : 'rgba(201,168,76,0.2)';
+      }
+
+      // Resend OTP
+      document.getElementById('otp-resend').addEventListener('click', (e) => {
+        e.preventDefault();
+        if (!currentUser) return;
+        otpBoxes.forEach(b => { b.value=''; b.classList.remove('filled'); });
+        otpErrorEl.style.display = 'none';
+        otpVerifyBtn.disabled = false;
+        pendingOTP = String(Math.floor(100000 + Math.random() * 900000));
+        otpExpiry  = Date.now() + 5 * 60 * 1000;
+        startOTPTimer();
+        sendOTPEmail(currentUser.email, pendingOTP);
+        otpBoxes[0].focus();
+      });
+
+      // Back to step 1
+      document.getElementById('otp-back').addEventListener('click', (e) => {
+        e.preventDefault();
+        clearOTPTimer();
+        pendingOTP = null;
+        firebase.auth().signOut(); // triggers onAuthStateChanged → showStep1()
+      });
+
+      function showDashboard() {
+        loginContainer.style.display = 'none';
+        dashboardContent.style.display = 'block';
+        loginEmail.value = '';
+        loginPassword.value = '';
+        loginError.style.display = 'none';
+        fetchCandidatesFromFirestore();
       }
 
       // Handle sign out
       signOutBtn.addEventListener('click', () => {
+        otpVerified = false;
         firebase.auth().signOut()
-          .then(() => console.log("Signed out successfully."))
-          .catch(err => console.error("Error signing out:", err));
+          .then(() => console.log('Signed out successfully.'))
+          .catch(err => console.error('Error signing out:', err));
       });
 
       // Fetch candidates from Firestore
