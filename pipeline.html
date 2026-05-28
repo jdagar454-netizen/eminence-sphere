@@ -701,7 +701,10 @@
             if (error.code === 'auth/invalid-email') msg = "Please enter a valid email address.";
             if (error.code === 'auth/user-not-found') msg = "No administrator found with this email.";
             if (error.code === 'auth/wrong-password') msg = "Incorrect password.";
-            showLoginError(msg);
+            if (error.code === 'auth/invalid-credential') msg = "Invalid credentials. Please verify email/password.";
+            
+            // Append error details to assist in diagnosing issues
+            showLoginError(`${msg} (${error.code || error.message})`);
           });
       }
 
