@@ -507,7 +507,7 @@
     appScript.src = "https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js";
     appScript.onload = () => {
       const configScript = document.createElement('script');
-      configScript.src = "js/firebase-config.js";
+      configScript.src = "js/firebase-config.js?v=2";
       configScript.onload = () => {
         const dbScript = document.createElement('script');
         dbScript.src = "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js";
