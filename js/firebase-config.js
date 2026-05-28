@@ -6,7 +6,7 @@
 // You can get this configuration in your Firebase Console:
 // Settings icon (gear) -> Project settings -> Web Apps section.
 const firebaseConfig = {
-  apiKey: "AIzaSyBmyZ6JLVJj0EjgXFTGOSHK-d7uK3yo8ww",
+  apiKey: "AIzaSyBmyZ6JLVJj0EjgXFTGOSHk-d7uK3yo8ww",
   authDomain: "team-eminence.firebaseapp.com",
   projectId: "team-eminence",
   storageBucket: "team-eminence.firebasestorage.app",
