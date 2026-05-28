@@ -412,6 +412,47 @@
       border-radius: var(--radius-sm);
       border: 1px solid rgba(224, 92, 92, 0.2);
     }
+
+    /* Password show/hide toggle */
+    .password-input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .password-input-wrapper .form-input {
+      padding-right: 3rem;
+    }
+
+    .password-toggle-btn {
+      position: absolute;
+      right: 0.75rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.25rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color var(--transition-fast);
+      line-height: 0;
+    }
+
+    .password-toggle-btn:hover {
+      color: var(--gold-light);
+    }
+
+    .password-toggle-btn svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: opacity 0.2s;
+    }
   </style>
 </head>
 <body>
@@ -462,7 +503,15 @@
               <label class="form-label" for="login-password" style="margin-bottom: 0;">Password</label>
               <a href="#" id="forgot-password-link" style="font-size: 0.75rem; color: var(--gold-light); text-decoration: none; font-weight: 500;">Forgot Password?</a>
             </div>
-            <input class="form-input" type="password" id="login-password" placeholder="••••••••" />
+            <div class="password-input-wrapper">
+              <input class="form-input" type="password" id="login-password" placeholder="••••••••" />
+              <button type="button" class="password-toggle-btn" id="password-toggle" aria-label="Show or hide password">
+                <!-- Eye icon (password hidden) -->
+                <svg id="eye-icon" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                <!-- Eye-off icon (password visible) -->
+                <svg id="eye-off-icon" viewBox="0 0 24 24" style="display:none;"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+              </button>
+            </div>
           </div>
           <button class="btn btn-primary" id="login-btn">Sign In</button>
           <div class="login-error" id="login-error" style="display: none;"></div>
@@ -702,6 +751,20 @@
               forgotPasswordLink.style.pointerEvents = 'auto';
               forgotPasswordLink.textContent = "Forgot Password?";
             });
+        });
+      }
+
+      // Handle password show/hide toggle
+      const passwordToggleBtn = document.getElementById('password-toggle');
+      const eyeIcon = document.getElementById('eye-icon');
+      const eyeOffIcon = document.getElementById('eye-off-icon');
+      if (passwordToggleBtn) {
+        passwordToggleBtn.addEventListener('click', () => {
+          const isHidden = loginPassword.type === 'password';
+          loginPassword.type = isHidden ? 'text' : 'password';
+          eyeIcon.style.display    = isHidden ? 'none'  : 'block';
+          eyeOffIcon.style.display = isHidden ? 'block' : 'none';
+          loginPassword.focus();
         });
       }
 
