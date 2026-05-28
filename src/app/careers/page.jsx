@@ -1,8 +1,11 @@
 "use client";
+import { useScrollReveal } from "../../hooks/useScrollReveal";
 
 import Link from "next/link";
 
 export default function Careers() {
+  useScrollReveal();
+
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: `

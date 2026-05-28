@@ -1,12 +1,16 @@
 import './globals.css';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import Script from 'next/script';
+
+export const viewport = {
+  themeColor: '#FFFFFF',
+};
 
 export const metadata = {
   title: 'Eminence Sphere — Consulting & Business Services',
   description: 'Eminence Sphere Consulting & Business Services — Your trusted partner for Resume Making, Job Recruitment, Career Consultation, Mock Interview & Training, and Professional Hurdles Consultation.',
   keywords: 'consulting, business services, resume making, job recruitment, career consultation, mock interview, professional hurdles, Eminence Sphere',
-  themeColor: '#FFFFFF',
   openGraph: {
     type: 'website',
     title: 'Eminence Sphere Consulting & Business Services',
@@ -32,8 +36,7 @@ export default function RootLayout({ children }) {
         <Footer />
         
         {/* Legacy Scripts - these will be refactored into React components later */}
-        <script src="/js/main.js" async></script>
-        <script src="/js/chatbot.js" async></script>
+        <Script src="/js/chatbot.js" strategy="lazyOnload" />
       </body>
     </html>
   );

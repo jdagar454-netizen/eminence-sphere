@@ -1,6 +1,10 @@
+"use client";
 import Link from "next/link";
+import { useScrollReveal } from "../../hooks/useScrollReveal";
+import ContactForm from "../../components/ContactForm";
 
 export default function Contact() {
+  useScrollReveal();
   return (
     <>
       {/* PAGE HERO */}
@@ -81,71 +85,7 @@ export default function Contact() {
                 <div className="contact-form-title">Send Us a Message</div>
                 <div className="contact-form-subtitle">Fill in the form below and we'll get back to you within one business day.</div>
 
-                <form id="contact-form" className="contact-form" noValidate>
-                  <div className="form-grid-2">
-                    <div className="form-group">
-                      <label className="form-label" htmlFor="first-name">First Name *</label>
-                      <input className="form-input" type="text" id="first-name" name="first-name" placeholder="John" required />
-                      <span className="form-error">Please enter your first name.</span>
-                    </div>
-                    <div className="form-group">
-                      <label className="form-label" htmlFor="last-name">Last Name *</label>
-                      <input className="form-input" type="text" id="last-name" name="last-name" placeholder="Smith" required />
-                      <span className="form-error">Please enter your last name.</span>
-                    </div>
-                  </div>
-
-                  <div className="form-group">
-                    <label className="form-label" htmlFor="email">Email Address *</label>
-                    <input className="form-input" type="email" id="email" name="email" placeholder="john@company.com" required />
-                    <span className="form-error">Please enter a valid email address.</span>
-                  </div>
-
-                  <div className="form-grid-2">
-                    <div className="form-group">
-                      <label className="form-label" htmlFor="phone">Phone Number</label>
-                      <input className="form-input" type="tel" id="phone" name="phone" placeholder="+91 121 315 9030" />
-                    </div>
-                    <div className="form-group">
-                      <label className="form-label" htmlFor="company">Company Name</label>
-                      <input className="form-input" type="text" id="company" name="company" placeholder="Your Company" />
-                    </div>
-                  </div>
-
-                  <div className="form-group">
-                    <label className="form-label" htmlFor="service">Service of Interest</label>
-                    <select className="form-select" id="service" name="service" defaultValue="">
-                      <option value="" disabled>Select a service…</option>
-                      <option value="resume-making">Resume Making</option>
-                      <option value="job-recruitment">Job Recruitment</option>
-                      <option value="career-consultation">Career Consultation</option>
-                      <option value="mock-interview-training">Mock Interview &amp; Training</option>
-                      <option value="professional-hurdles-consultation">Professional Hurdles Consultation</option>
-                      <option value="multiple">Multiple Services</option>
-                      <option value="not-sure">Not Sure Yet</option>
-                    </select>
-                  </div>
-
-                  <div className="form-group">
-                    <label className="form-label" htmlFor="message">Your Message *</label>
-                    <textarea className="form-textarea" id="message" name="message" placeholder="Tell us about your business challenge or what you're looking to achieve…" required data-minlength="20"></textarea>
-                    <span className="form-error">Please provide a brief message (at least 20 characters).</span>
-                  </div>
-
-                  <button type="submit" className="btn btn-primary" id="submit-btn" style={{ width: "100%", justifyContent: "center", marginTop: "0.5rem" }}>
-                    Send Message
-                    <svg className="btn-icon" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3.75 9h10.5M9.75 4.5L14.25 9l-4.5 4.5"/></svg>
-                  </button>
-                </form>
-
-                {/* Success state */}
-                <div className="form-success" id="form-success">
-                  <div className="success-icon">
-                    <svg viewBox="0 0 28 28"><polyline points="5 14 11 20 23 8"/></svg>
-                  </div>
-                  <h3>Message Sent!</h3>
-                  <p>Thank you for reaching out. A member of our team will be in contact with you within one business day.</p>
-                </div>
+                <ContactForm />
               </div>
             </div>
 

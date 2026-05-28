@@ -23,7 +23,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`} id="navbar">
+      <nav className={`navbar${isScrolled ? ' scrolled' : ''}`} id="navbar">
         <div className="nav-inner">
           <Link href="/" className="nav-logo" id="nav-logo" onClick={closeMenu}>
             <img src="/images/logo.png" alt="Eminence Sphere Logo" style={{ height: '48px', width: 'auto' }} />

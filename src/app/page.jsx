@@ -1,11 +1,17 @@
+"use client";
 import Link from 'next/link';
+import { useScrollReveal } from '../hooks/useScrollReveal';
+import HeroCanvas from '../components/HeroCanvas';
+import AnimatedCounter from '../components/AnimatedCounter';
 
 export default function Home() {
+  useScrollReveal();
+
   return (
     <main>
       {/* ═══════════════════ HERO ═══════════════════ */}
       <section className="hero" id="hero">
-        <canvas id="hero-canvas"></canvas>
+        <HeroCanvas />
 
         <div className="glow-orb glow-orb-gold" style={{ width: '600px', height: '600px', top: '-100px', right: '-100px', opacity: 0.5 }}></div>
         <div className="glow-orb glow-orb-blue" style={{ width: '500px', height: '500px', bottom: '-100px', left: '-100px', opacity: 0.6 }}></div>
@@ -64,19 +70,19 @@ export default function Home() {
                   </div>
                   <div className="hero-card-metrics">
                     <div className="metric-item">
-                      <div className="metric-value" data-counter data-target="91" data-suffix="%">0%</div>
+                      <AnimatedCounter target="91" suffix="%" className="metric-value" />
                       <div className="metric-label">Client Satisfaction</div>
                     </div>
                     <div className="metric-item">
-                      <div className="metric-value" data-counter data-target="2" data-suffix="yrs">0yrs</div>
+                      <AnimatedCounter target="2" suffix="yrs" className="metric-value" />
                       <div className="metric-label">Experience</div>
                     </div>
                     <div className="metric-item">
-                      <div className="metric-value" data-counter data-target="50" data-suffix="+">0+</div>
+                      <AnimatedCounter target="50" suffix="+" className="metric-value" />
                       <div className="metric-label">Projects Done</div>
                     </div>
                     <div className="metric-item">
-                      <div className="metric-value" data-counter data-target="5" data-suffix="+">0+</div>
+                      <AnimatedCounter target="5" suffix="+" className="metric-value" />
                       <div className="metric-label">Industries</div>
                     </div>
                   </div>
@@ -96,19 +102,19 @@ export default function Home() {
         <div className="container">
           <div className="stats-grid reveal">
             <div className="stat-item">
-              <div className="stat-number" data-counter data-target="50" data-suffix="+">0+</div>
+              <AnimatedCounter target="50" suffix="+" className="stat-number" />
               <div className="stat-label">Clients Served</div>
             </div>
             <div className="stat-item">
-              <div className="stat-number" data-counter data-target="2" data-suffix="+">0+</div>
+              <AnimatedCounter target="2" suffix="+" className="stat-number" />
               <div className="stat-label">Years of Expertise</div>
             </div>
             <div className="stat-item">
-              <div className="stat-number" data-counter data-target="91" data-suffix="%">0%</div>
+              <AnimatedCounter target="91" suffix="%" className="stat-number" />
               <div className="stat-label">Success Rate</div>
             </div>
             <div className="stat-item">
-              <div className="stat-number" data-counter data-target="5" data-suffix="+">0+</div>
+              <AnimatedCounter target="5" suffix="+" className="stat-number" />
               <div className="stat-label">Industries Covered</div>
             </div>
           </div>
@@ -250,7 +256,7 @@ export default function Home() {
                 </div>
                 <div className="why-badge-stack">
                   <div className="years-badge">
-                    <div className="years-num" data-counter data-target="2" data-suffix="">0</div>
+                    <AnimatedCounter target="2" suffix="" className="years-num" />
                     <div className="years-label">Years of<br/>Excellence</div>
                   </div>
                 </div>
