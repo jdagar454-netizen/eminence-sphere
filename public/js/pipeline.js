@@ -431,57 +431,57 @@ const EMAILJS_TEMPLATE_ID = 'template_crc0amt';
     container.innerHTML = '';
 
     if (filtered.length === 0) {
-      container.innerHTML = \`
+      container.innerHTML = `
         <div class="empty-state">
           <h3>No Candidates Registered</h3>
           <p>Applications submitted via the chatbot widget will appear here automatically.</p>
         </div>
-      \`;
+      `;
       return;
     }
 
     filtered.forEach(c => {
       const card = document.createElement('div');
       card.className = 'candidate-row-card';
-      card.innerHTML = \`
+      card.innerHTML = `
         <div class="candidate-name-col">
-          <span class="cand-name">\${escapeHTML(c.name)}</span>
-          <span class="cand-id">ID: \${escapeHTML(c.id)}</span>
+          <span class="cand-name">${escapeHTML(c.name)}</span>
+          <span class="cand-id">ID: ${escapeHTML(c.id)}</span>
         </div>
         
         <div class="candidate-contact-col">
-          <a href="mailto:\${escapeHTML(c.email)}" class="cand-email">\${escapeHTML(c.email)}</a>
-          <span class="cand-phone">\${escapeHTML(c.phone)}</span>
+          <a href="mailto:${escapeHTML(c.email)}" class="cand-email">${escapeHTML(c.email)}</a>
+          <span class="cand-phone">${escapeHTML(c.phone)}</span>
         </div>
 
         <div class="candidate-role-col">
-          <span class="cand-role">\${escapeHTML(c.role)}</span>
-          <span class="cand-exp">\${escapeHTML(c.experience)} exp</span>
+          <span class="cand-role">${escapeHTML(c.role)}</span>
+          <span class="cand-exp">${escapeHTML(c.experience)} exp</span>
         </div>
 
         <div class="candidate-resume-col">
-          \${escapeHTML(c.resume)}
+          ${escapeHTML(c.resume)}
         </div>
 
         <div class="candidate-actions-col">
-          <button class="action-btn action-btn-download" data-id="\${c.id}">Download JSON</button>
-          <button class="action-btn action-btn-delete" data-id="\${c.id}">Delete</button>
+          <button class="action-btn action-btn-download" data-id="${c.id}">Download JSON</button>
+          <button class="action-btn action-btn-delete" data-id="${c.id}">Delete</button>
         </div>
-      \`;
+      `;
 
       // Add button click listeners
       card.querySelector('.action-btn-download').addEventListener('click', () => {
         const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(c, null, 2));
         const downloadAnchor = document.createElement('a');
         downloadAnchor.setAttribute("href", dataStr);
-        downloadAnchor.setAttribute("download", \`Candidate_\${c.name.replace(/\\s+/g, '_')}_Profile.json\`);
+        downloadAnchor.setAttribute("download", `Candidate_${c.name.replace(/\s+/g, '_')}_Profile.json`);
         document.body.appendChild(downloadAnchor);
         downloadAnchor.click();
         downloadAnchor.remove();
       });
 
       card.querySelector('.action-btn-delete').addEventListener('click', () => {
-        if (confirm(\`Are you sure you want to remove \${c.name}?\`)) {
+        if (confirm(`Are you sure you want to remove ${c.name}?`)) {
           deleteCandidate(c.id);
         }
       });
