@@ -137,7 +137,7 @@
         const opacity = p.opacity * (0.6 + 0.4 * Math.sin(time + p.pulse));
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(201, 168, 76, ${opacity})`;
+        ctx.fillStyle = `rgba(124, 58, 237, ${opacity * 0.5})`;
         ctx.fill();
 
         // Draw connections
@@ -148,7 +148,7 @@
           const dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < 120) {
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(201, 168, 76, ${0.08 * (1 - dist / 120)})`;
+            ctx.strokeStyle = `rgba(124, 58, 237, ${0.05 * (1 - dist / 120)})`;
             ctx.lineWidth = 0.5;
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(q.x, q.y);
