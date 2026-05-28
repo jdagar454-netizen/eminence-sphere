@@ -16,3 +16,7 @@ desktop.ini
 # Temp
 *.tmp
 *.temp
+
+# Image backups
+images/logo-original-backup.png
+images/logo-original.png
