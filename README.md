@@ -13,8 +13,8 @@ Welcome to the official repository for **Eminence Sphere Consulting & Business S
 ## Key Features
 
 1. **Enterprise Careers Portal (`careers.html`)**
-   - Integrates live external job applications for enterprise partners (e.g., *Amazon Virtual Customer Support Representative* and *Concentrix Customer Support Advisor*).
-   - Allows users to apply directly through official portals or interactively via the recruitment assistant.
+   - Displays career opportunities and placement pathways.
+   - Allows candidates to submit profiles to the talent pool via the virtual recruitment assistant.
 
 2. **AI Recruitment Chatbot Assistant (`js/chatbot.js` & `css/chatbot.css`)**
    - Interactive chat widget embedded globally across all website pages.
