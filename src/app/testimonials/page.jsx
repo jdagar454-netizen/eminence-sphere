@@ -94,7 +94,7 @@ export default function Testimonials() {
                 <div className="author-avatar">NC</div>
                 <div>
                   <div className="author-name">Nikku</div>
-                  <div className="author-title">Customer Support Representative</div>
+                  <div className="author-title">Special Client of Eminence</div>
                 </div>
               </div>
             </div>
