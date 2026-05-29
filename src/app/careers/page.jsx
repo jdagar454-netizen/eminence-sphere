@@ -5,6 +5,27 @@ import Link from 'next/link';
 import { db } from '../../lib/firebase';
 import { collection, getDocs } from 'firebase/firestore';
 
+const FALLBACK_JOBS = [
+  {
+    id: "customer-support-wfh",
+    title: "Customer Support Representative (WFH)",
+    department: "Customer support & BPO",
+    shortDescription: "Help customers resolve queries via phone, email, and live chat. Work from the comfort of your home with a leading global brand."
+  },
+  {
+    id: "tech-support-specialist",
+    title: "Senior Technical Support Specialist",
+    department: "IT & Tech Support Services",
+    shortDescription: "Solve complex technical hurdles, escalate network issues, and guide enterprise users through configuration pipelines."
+  },
+  {
+    id: "telecalling-sales-executive",
+    title: "Telecalling & Sales Executive",
+    department: "Telesales & Telecalling",
+    shortDescription: "Drive customer engagement, follow up with potential leads, and support closures for non-IT consulting pipelines."
+  }
+];
+
 export default function Careers() {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -13,10 +34,15 @@ export default function Careers() {
     const fetchJobs = async () => {
       try {
         const querySnapshot = await getDocs(collection(db, "jobs"));
-        const jobsData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        setJobs(jobsData);
+        if (!querySnapshot.empty) {
+          const jobsData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+          setJobs(jobsData);
+        } else {
+          setJobs(FALLBACK_JOBS);
+        }
       } catch (err) {
-        console.error("Error fetching jobs:", err);
+        console.error("Error fetching jobs, using local fallbacks:", err);
+        setJobs(FALLBACK_JOBS);
       } finally {
         setLoading(false);
       }

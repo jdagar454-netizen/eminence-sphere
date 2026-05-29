@@ -6,6 +6,51 @@ import { db } from '../../../lib/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 import Link from 'next/link';
 
+const FALLBACK_JOBS_DETAILS = {
+  "customer-support-wfh": {
+    title: "Customer Support Representative (WFH)",
+    department: "Customer support & BPO",
+    location: "Remote (Work From Home)",
+    type: "Full-Time",
+    salary: "₹18,000 - ₹25,000 per month",
+    description: "Eminence Sphere is hiring Entry-Level Customer Support Representatives for our remote work placement pipeline. In this role, you will act as the primary point of contact for customer queries, helping them troubleshoot technical issues, manage accounts, and process request closures with high efficiency.",
+    requirements: [
+      "Excellent verbal & written communication in English",
+      "Comfort with basic technology tools and internet browsing",
+      "Previous customer service experience is a plus, but entry-level candidates are welcome",
+      "Quiet workspace environment at home with reliable internet connection"
+    ]
+  },
+  "tech-support-specialist": {
+    title: "Senior Technical Support Specialist",
+    department: "IT & Tech Support Services",
+    location: "In-Office (Meerut)",
+    type: "Full-Time",
+    salary: "₹30,000 - ₹45,000 per month",
+    description: "We are seeking a seasoned Tech Support Specialist to support global BPO clients. You will manage advanced tier-2 technical queries, coordinate troubleshooting pipelines, and maintain high standards of performance and resolution closure rates.",
+    requirements: [
+      "Graduate in CS/IT or equivalent technical certification",
+      "1-3 years of technical helpdesk or enterprise systems support experience",
+      "Deep knowledge of hardware systems, operating software, and routing protocols",
+      "Analytical mindset to solve complex network hurdles"
+    ]
+  },
+  "telecalling-sales-executive": {
+    title: "Telecalling & Sales Executive",
+    department: "Telesales & Telecalling",
+    location: "Rohta Road, Meerut",
+    type: "Full-Time",
+    salary: "₹15,000 - ₹22,000 per month + incentives",
+    description: "Join a fast-growing recruitment and sales outreach setup. You will run out-bound calling campaigns to pitch services, schedule candidate screening interviews, and coordinate recruitment workflows.",
+    requirements: [
+      "High energy levels and persuasive communication skills",
+      "Bilingual fluency in Hindi & English",
+      "Basic knowledge of spreadsheet operations and contact databases",
+      "Goal-oriented approach to close hiring outreach milestones"
+    ]
+  }
+};
+
 export default function CareerDetails() {
   const { slug } = useParams();
   const router = useRouter();
@@ -19,12 +64,18 @@ export default function CareerDetails() {
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
           setJob({ id: docSnap.id, ...docSnap.data() });
+        } else if (FALLBACK_JOBS_DETAILS[slug]) {
+          setJob({ id: slug, ...FALLBACK_JOBS_DETAILS[slug] });
         } else {
-          // Document doesn't exist
           router.push('/not-found');
         }
       } catch (err) {
-        console.error("Error fetching job details:", err);
+        console.error("Error fetching job details, using fallbacks:", err);
+        if (FALLBACK_JOBS_DETAILS[slug]) {
+          setJob({ id: slug, ...FALLBACK_JOBS_DETAILS[slug] });
+        } else {
+          router.push('/not-found');
+        }
       } finally {
         setLoading(false);
       }
@@ -79,7 +130,9 @@ export default function CareerDetails() {
       <section className="job-content-section">
         <div className="container" style={{ maxWidth: '800px', margin: '0 auto' }}>
           <h2 className="heading-md" style={{ marginBottom: '1.5rem' }}>About the Role</h2>
-          <div style={{ color: 'var(--text-secondary)', lineHeight: '1.8', marginBottom: '3rem' }} dangerouslySetInnerHTML={{ __html: job.description }} />
+          <div style={{ color: 'var(--text-secondary)', lineHeight: '1.8', marginBottom: '3rem' }}>
+            {job.description}
+          </div>
           
           <h2 className="heading-md" style={{ marginBottom: '1.5rem' }}>Requirements</h2>
           <ul style={{ color: 'var(--text-secondary)', lineHeight: '1.8', paddingLeft: '1.5rem', marginBottom: '3rem' }}>

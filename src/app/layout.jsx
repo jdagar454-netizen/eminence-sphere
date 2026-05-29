@@ -29,6 +29,7 @@ export const metadata = {
 };
 
 import Chatbot from '../components/Chatbot';
+import WhatsAppWidget from '../components/WhatsAppWidget';
 import PageTransition from '../components/PageTransition';
 import { Inter } from 'next/font/google';
 
@@ -61,6 +62,7 @@ export default function RootLayout({ children }) {
         <PageTransition>{children}</PageTransition>
         <Footer />
         <Chatbot />
+        <WhatsAppWidget />
       </body>
     </html>
   );
