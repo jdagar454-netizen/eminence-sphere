@@ -1,6 +1,7 @@
 "use client";
 import { useScrollReveal } from "../../hooks/useScrollReveal";
 import Link from "next/link";
+import AnimatedCounter from "../../components/AnimatedCounter";
 
 export default function About() {
   useScrollReveal();
@@ -42,7 +43,9 @@ export default function About() {
                       <path d="M4 20h32M20 4c-4 4-6 9-6 16s2 12 6 16M20 4c4 4 6 9 6 16s-2 12-6 16"/>
                     </svg>
                   </div>
-                  <div className="stat-number" style={{ fontSize: "3rem" }} data-counter data-target="2" data-suffix="+">0+</div>
+                  <div className="stat-number" style={{ fontSize: "3rem" }}>
+                    <AnimatedCounter target="2" suffix="+" className="stat-number" />
+                  </div>
                   <div style={{ color: "var(--text-secondary)", fontSize: "0.875rem", marginTop: "0.25rem" }}>Years of Excellence</div>
                 </div>
               </div>
@@ -56,19 +59,19 @@ export default function About() {
         <div className="container">
           <div className="stats-grid reveal">
             <div className="stat-item">
-              <div className="stat-number" data-counter data-target="50" data-suffix="+">0+</div>
+              <AnimatedCounter target="50" suffix="+" className="stat-number" />
               <div className="stat-label">Clients Served</div>
             </div>
             <div className="stat-item">
-              <div className="stat-number" data-counter data-target="2" data-suffix="+">0+</div>
+              <AnimatedCounter target="2" suffix="+" className="stat-number" />
               <div className="stat-label">Years of Expertise</div>
             </div>
             <div className="stat-item">
-              <div className="stat-number" data-counter data-target="91" data-suffix="%">0%</div>
+              <AnimatedCounter target="91" suffix="%" className="stat-number" />
               <div className="stat-label">Client Satisfaction</div>
             </div>
             <div className="stat-item">
-              <div className="stat-number" data-counter data-target="5" data-suffix="+">0+</div>
+              <AnimatedCounter target="5" suffix="+" className="stat-number" />
               <div className="stat-label">Industries Covered</div>
             </div>
           </div>

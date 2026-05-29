@@ -1,6 +1,7 @@
 "use client";
 import { useScrollReveal } from "../../hooks/useScrollReveal";
 import Link from "next/link";
+import AnimatedCounter from "../../components/AnimatedCounter";
 
 export default function Testimonials() {
   useScrollReveal();
@@ -22,19 +23,19 @@ export default function Testimonials() {
         <div className="container">
           <div className="stats-grid reveal">
             <div className="stat-item">
-              <div className="stat-number" data-counter data-target="50" data-suffix="+">0+</div>
+              <AnimatedCounter target="50" suffix="+" className="stat-number" />
               <div className="stat-label">Happy Clients</div>
             </div>
             <div className="stat-item">
-              <div className="stat-number" data-counter data-target="91" data-suffix="%">0%</div>
+              <AnimatedCounter target="91" suffix="%" className="stat-number" />
               <div className="stat-label">Would Recommend Us</div>
             </div>
             <div className="stat-item">
-              <div className="stat-number" data-counter data-target="4.9" data-suffix="/5">0/5</div>
+              <AnimatedCounter target="4.9" suffix="/5" className="stat-number" />
               <div className="stat-label">Average Rating</div>
             </div>
             <div className="stat-item">
-              <div className="stat-number" data-counter data-target="85" data-suffix="%">0%</div>
+              <AnimatedCounter target="85" suffix="%" className="stat-number" />
               <div className="stat-label">Repeat Engagements</div>
             </div>
           </div>
