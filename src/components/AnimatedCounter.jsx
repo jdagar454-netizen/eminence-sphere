@@ -15,7 +15,7 @@ export default function AnimatedCounter({ target, suffix = '', duration = 2000, 
           }
         });
       },
-      { threshold: 0.5 }
+      { threshold: 0.1 }
     );
 
     if (elementRef.current) {
