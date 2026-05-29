@@ -18,13 +18,13 @@ export const metadata = {
     description: 'Transforming businesses through strategic excellence and innovative solutions. 50+ clients served across 5+ industries.',
     url: 'https://eminencesphere.online',
     siteName: 'Eminence Sphere',
-    images: [{ url: '/images/logo.png' }]
+    images: [{ url: 'https://eminencesphere.online/images/logo.png' }]
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Eminence Sphere Consulting & Business Services',
     description: 'Transforming businesses through strategic excellence and innovative solutions.',
-    images: ['/images/logo.png']
+    images: ['https://eminencesphere.online/images/logo.png']
   }
 };
 

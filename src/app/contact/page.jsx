@@ -61,6 +61,20 @@ export default function Contact() {
                 </div>
 
                 <div className="contact-detail-item">
+                  <div className="contact-detail-icon" style={{ backgroundColor: '#25D366' }}>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: '18px', height: '18px' }}><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                  </div>
+                  <div>
+                    <div className="contact-detail-label">WhatsApp Quick Connect</div>
+                    <div className="contact-detail-value">
+                      <a href="https://wa.me/911213159030" target="_blank" rel="noopener noreferrer" style={{ color: '#25D366', fontWeight: '600', textDecoration: 'underline' }}>
+                        Chat with Recruitment Team
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="contact-detail-item">
                   <div className="contact-detail-icon">
                     <svg viewBox="0 0 18 18"><circle cx="9" cy="9" r="7"/><path d="M9 5v4l2.5 2.5"/></svg>
                   </div>
