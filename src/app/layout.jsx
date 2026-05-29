@@ -8,6 +8,7 @@ export const viewport = {
 };
 
 export const metadata = {
+  metadataBase: new URL('https://eminencesphere.online'),
   title: 'Eminence Sphere — Consulting & Business Services',
   description: 'Eminence Sphere Consulting & Business Services — Your trusted partner for Resume Making, Job Recruitment, Career Consultation, Mock Interview & Training, and Professional Hurdles Consultation.',
   keywords: 'consulting, business services, resume making, job recruitment, career consultation, mock interview, professional hurdles, Eminence Sphere',
