@@ -136,7 +136,7 @@ export default function Testimonials() {
                   <div className="result-label">Time to Results</div>
                 </div>
                 <div className="result-stat">
-                  <div className="result-value">+$2M</div>
+                  <div className="result-value">+₹15Cr</div>
                   <div className="result-label">Annual Savings</div>
                 </div>
               </div>
