@@ -52,7 +52,7 @@ export default function Testimonials() {
           </div>
           <div className="testimonials-full-grid">
 
-            <div className="card testimonial-card reveal reveal-delay-1">
+            <div className="card testimonial-card">
               <div className="quote-mark">"</div>
               <p className="testimonial-text">The placement process at Eminence Sphere was exceptional. They mapped my skills perfectly to a Senior Customer Support Representative role, and the support I received during transition was outstanding.</p>
               <div className="testimonial-author">
@@ -64,7 +64,7 @@ export default function Testimonials() {
               </div>
             </div>
 
-            <div className="card testimonial-card reveal reveal-delay-2">
+            <div className="card testimonial-card">
               <div className="quote-mark">"</div>
               <p className="testimonial-text">Eminence Sphere helped me land my dream role as a Senior Customer Support Representative. Their team is highly professional and guided me at every step of the recruitment journey.</p>
               <div className="testimonial-author">
@@ -76,7 +76,7 @@ export default function Testimonials() {
               </div>
             </div>
 
-            <div className="card testimonial-card reveal reveal-delay-1">
+            <div className="card testimonial-card">
               <div className="quote-mark">"</div>
               <p className="testimonial-text">Eminence Sphere's remote work placements are second to none. They made transitioning to a Virtual Senior Customer Support Representative role seamless and stress-free.</p>
               <div className="testimonial-author">
@@ -88,7 +88,7 @@ export default function Testimonials() {
               </div>
             </div>
 
-            <div className="card testimonial-card reveal reveal-delay-2">
+            <div className="card testimonial-card">
               <div className="quote-mark">"</div>
               <p className="testimonial-text">My career trajectory changed completely after associating with Eminence Sphere. The interview coaching and training program prepared me for exact scenarios. Highly recommended!</p>
               <div className="testimonial-author">
