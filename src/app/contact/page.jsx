@@ -80,7 +80,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <div className="contact-detail-label">Business Hours</div>
-                    <div className="contact-detail-value">Monday – Friday: 8:00am – 6:00pm<br/>Saturday: 9:00am – 1:00pm</div>
+                    <div className="contact-detail-value">Monday – Friday: 8:00am – 6:00pm<br/>Saturday – Sunday: Closed</div>
                   </div>
                 </div>
               </div>
