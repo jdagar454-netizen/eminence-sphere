@@ -67,7 +67,7 @@ export default function Contact() {
                   <div>
                     <div className="contact-detail-label">WhatsApp Quick Connect</div>
                     <div className="contact-detail-value">
-                      <a href="https://wa.me/911213159030" target="_blank" rel="noopener noreferrer" style={{ color: '#25D366', fontWeight: '600', textDecoration: 'underline' }}>
+                      <a href="https://wa.me/918791147964" target="_blank" rel="noopener noreferrer" style={{ color: '#25D366', fontWeight: '600', textDecoration: 'underline' }}>
                         Chat with Recruitment Team
                       </a>
                     </div>
