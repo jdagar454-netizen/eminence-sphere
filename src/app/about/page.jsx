@@ -24,9 +24,9 @@ export default function About() {
             <div className="about-story-text reveal">
               <div className="section-tag" style={{ justifyContent: "flex-start" }}>Who We Are</div>
               <h2 className="heading-lg">A Legacy of Strategic Excellence</h2>
-              <p>Eminence Sphere Consulting &amp; Business Services was founded on a singular conviction — that every business, regardless of size or sector, deserves access to world-class strategic counsel and operational expertise.</p>
-              <p>Over more than a decade, we have partnered with startups, SMEs, and large enterprises across diverse industries, helping them navigate complex challenges, seize emerging opportunities, and build lasting competitive advantage.</p>
-              <p>Our name reflects our ambition: to elevate every client to a sphere of eminence — a place where they operate with clarity, confidence, and consistent performance.</p>
+              <p>At Eminence Sphere, we don’t just fill vacancies—we build high-performing teams. As a rapidly growing recruitment and consulting partner, we specialize in driving workforce success for the BPO, ITES, and Non-IT sectors.</p>
+              <p>From bulk hiring initiatives to precision candidate screening, we handle the entire recruitment lifecycle so you can focus on scaling your business.</p>
+              <p>By bridging the gap between top-tier talent and industry-leading employers, we guarantee faster closures, exceptional candidate quality, and an entirely seamless hiring experience.</p>
               <Link href="/contact" className="btn btn-primary" style={{ marginTop: "1.5rem" }} id="about-cta">
                 Work With Us
                 <svg className="btn-icon" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3.75 9h10.5M9.75 4.5L14.25 9l-4.5 4.5"/></svg>
@@ -169,10 +169,10 @@ export default function About() {
           </div>
           <div className="team-grid">
             <div className="card team-card reveal reveal-delay-1">
-              <div className="team-avatar">ES</div>
-              <div className="team-name">Emmanuel Sphere</div>
-              <div className="team-role">Founder &amp; CEO</div>
-              <p className="team-bio">With 20+ years of C-suite experience across finance and strategy, Emmanuel founded Eminence Sphere to democratise access to world-class consulting.</p>
+              <div className="team-avatar">NC</div>
+              <div className="team-name">Nikul Chaudhary</div>
+              <div className="team-role">Founder</div>
+              <p className="team-bio">Nikul founded Eminence Sphere Consulting &amp; Business Services to bridge the gap between employers and skilled candidates by ensuring faster closures and quality profiles.</p>
             </div>
             <div className="card team-card reveal reveal-delay-2">
               <div className="team-avatar">RA</div>

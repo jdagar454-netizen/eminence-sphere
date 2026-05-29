@@ -18,18 +18,16 @@ export default function Footer() {
               <li><Link href="/about" className="footer-link">About Us</Link></li>
               <li><Link href="/services" className="footer-link">Services</Link></li>
               <li><Link href="/testimonials" className="footer-link">Testimonials</Link></li>
-              <li><Link href="/careers" className="footer-link">Careers</Link></li>
               <li><Link href="/contact" className="footer-link">Contact</Link></li>
             </ul>
           </div>
           <div>
             <div className="footer-col-title">Services</div>
             <ul className="footer-links">
-              <li><Link href="/services#resume-making" className="footer-link">Resume Making</Link></li>
-              <li><Link href="/services#job-recruitment" className="footer-link">Job Recruitment</Link></li>
-              <li><Link href="/services#career-consultation" className="footer-link">Career Consultation</Link></li>
-              <li><Link href="/services#mock-interview-training" className="footer-link">Mock Interview &amp; Training</Link></li>
-              <li><Link href="/services#professional-hurdles-consultation" className="footer-link">Professional Hurdles Consultation</Link></li>
+              <li><Link href="/services#talent-acquisition" className="footer-link">Talent Acquisition</Link></li>
+              <li><Link href="/services#hr-consulting" className="footer-link">Strategic HR Consulting</Link></li>
+              <li><Link href="/services#talent-acquisition" className="footer-link">Bulk Hiring &amp; BPO</Link></li>
+              <li><Link href="/services#hr-consulting" className="footer-link">Candidate Screening</Link></li>
             </ul>
           </div>
           <div>
@@ -41,13 +39,17 @@ export default function Footer() {
             <div className="footer-contact-item">
               <svg className="footer-contact-icon" viewBox="0 0 16 16"><path d="M2 3h12a1 1 0 011 1v8a1 1 0 01-1 1H2a1 1 0 01-1-1V4a1 1 0 011-1z"/><path d="M1 4l7 5 7-5"/></svg>
               <div className="footer-contact-text">
-                <span style={{ display: 'block' }}>hr@eminencesphere.online (General &amp; HR)</span>
-                <span style={{ display: 'block', marginTop: '0.25rem' }}>info@eminencesphere.online (Recruitment &amp; Hiring)</span>
+                <span style={{ display: 'block' }}>hr@eminencesphere.online</span>
+                <span style={{ display: 'block', marginTop: '0.25rem' }}>info@eminencesphere.online</span>
               </div>
             </div>
             <div className="footer-contact-item">
               <svg className="footer-contact-icon" viewBox="0 0 16 16"><path d="M14.5 11.5l-2-2a1.4 1.4 0 00-2 0l-1 1C8 10 6 8 5.5 6.5l1-1a1.4 1.4 0 000-2l-2-2a1.4 1.4 0 00-2 0C1 3 1 7.5 6.5 13S13 15 14.5 13.5a1.4 1.4 0 000-2z"/></svg>
               <div className="footer-contact-text">+91 121 315 9030</div>
+            </div>
+            <div className="footer-contact-item" style={{ alignItems: 'flex-start' }}>
+              <svg className="footer-contact-icon" style={{ marginTop: '0.2rem' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              <div className="footer-contact-text" style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>GSTIN:<br/>09CKFPC6199H1ZT</div>
             </div>
           </div>
         </div>
@@ -55,14 +57,8 @@ export default function Footer() {
         <div className="footer-bottom">
           <div className="footer-copy">© 2025 Eminence Sphere Consulting &amp; Business Services. All rights reserved. | <Link href="/pipeline" style={{ color: 'var(--purple-primary)', textDecoration: 'underline' }}>Recruitment Pipeline</Link></div>
           <div className="footer-social">
-            <a href="#" className="social-link" aria-label="LinkedIn">
+            <a href="https://www.linkedin.com/in/nikul-chaudhary-b16344412" target="_blank" rel="noopener noreferrer" className="social-link" aria-label="LinkedIn">
               <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
-            </a>
-            <a href="#" className="social-link" aria-label="Twitter/X">
-              <svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg>
-            </a>
-            <a href="#" className="social-link" aria-label="Facebook">
-              <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
             </a>
           </div>
         </div>
