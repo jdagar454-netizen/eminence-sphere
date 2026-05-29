@@ -87,6 +87,18 @@ export default function Testimonials() {
               </div>
             </div>
 
+            <div className="card testimonial-card reveal reveal-delay-2">
+              <div className="quote-mark">"</div>
+              <p className="testimonial-text">My career trajectory changed completely after associating with Eminence Sphere. The interview coaching and training program prepared me for exact scenarios. Highly recommended!</p>
+              <div className="testimonial-author">
+                <div className="author-avatar">NC</div>
+                <div>
+                  <div className="author-name">Nikku</div>
+                  <div className="author-title">Customer Support Representative</div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </section>
