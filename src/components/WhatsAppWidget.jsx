@@ -6,8 +6,8 @@ export default function WhatsAppWidget() {
       <style dangerouslySetInnerHTML={{ __html: `
         .whatsapp-widget {
           position: fixed;
-          bottom: 2rem;
-          left: 2rem;
+          bottom: 8.5rem;
+          right: 2rem;
           z-index: 9999;
           display: flex;
           align-items: center;
@@ -53,10 +53,11 @@ export default function WhatsAppWidget() {
           color: var(--text-primary);
           box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
           opacity: 0;
-          transform: translateX(-10px);
+          transform: translateX(10px);
           pointer-events: none;
           transition: opacity 0.3s ease, transform 0.3s ease;
           white-space: nowrap;
+          order: -1; /* Display text on left of button */
         }
 
         .whatsapp-widget:hover .whatsapp-tooltip {
@@ -78,8 +79,8 @@ export default function WhatsAppWidget() {
 
         @media (max-width: 480px) {
           .whatsapp-widget {
-            bottom: 1rem;
-            left: 1rem;
+            bottom: 7rem;
+            right: 1rem;
           }
           .whatsapp-tooltip {
             display: none; /* Hide text on mobile to avoid overlapping */
