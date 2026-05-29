@@ -32,6 +32,7 @@ import Chatbot from '../components/Chatbot';
 import WhatsAppWidget from '../components/WhatsAppWidget';
 import PageTransition from '../components/PageTransition';
 import { Inter } from 'next/font/google';
+import { Analytics } from '@vercel/analytics/react';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -63,6 +64,7 @@ export default function RootLayout({ children }) {
         <Footer />
         <Chatbot />
         <WhatsAppWidget />
+        <Analytics />
       </body>
     </html>
   );
