@@ -60,7 +60,7 @@ export async function POST(request) {
       },
       body: JSON.stringify({
         from: 'Eminence Sphere AI <onboarding@resend.dev>',
-        to: ['info@eminencesphere.online', 'nikul240601@gmail.com'],
+        to: ['nikul240601@gmail.com'],
         subject: `New Application: ${candidate.name} - ${candidate.role}`,
         html: emailBody,
       }),
