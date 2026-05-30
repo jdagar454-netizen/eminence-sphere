@@ -34,12 +34,9 @@ export default function Careers() {
     const fetchJobs = async () => {
       try {
         const querySnapshot = await getDocs(collection(db, "jobs"));
-        if (!querySnapshot.empty) {
-          const jobsData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-          setJobs(jobsData);
-        } else {
-          setJobs(FALLBACK_JOBS);
-        }
+        const jobsData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        // If Firestore contains jobs (or has been successfully fetched as empty), use it
+        setJobs(jobsData);
       } catch (err) {
         console.error("Error fetching jobs, using local fallbacks:", err);
         setJobs(FALLBACK_JOBS);
