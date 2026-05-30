@@ -121,6 +121,19 @@ export default function Chatbot() {
     try {
       await setDoc(doc(db, "candidates", id), payload);
       console.log("Candidate saved to Firestore:", payload);
+
+      // Trigger serverless notification alert (Email)
+      fetch('/api/notify', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      })
+      .then(res => res.json())
+      .then(data => console.log("Notification status:", data))
+      .catch(err => console.error("Notification trigger failed:", err));
+
     } catch (e) {
       console.error("Firestore error, saving locally:", e);
       let localCands = JSON.parse(localStorage.getItem('eminence_candidates') || '[]');
