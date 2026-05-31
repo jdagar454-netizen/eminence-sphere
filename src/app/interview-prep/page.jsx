@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 const QUESTIONS_DATA = {
   "customer-support": [
@@ -78,6 +78,45 @@ export default function InterviewPrep() {
   const [timerActive, setTimerActive] = useState(false);
   const [showTips, setShowTips] = useState(false);
 
+  // Speech evaluation states
+  const [isListening, setIsListening] = useState(false);
+  const [transcription, setTranscription] = useState('');
+  const [evaluationResult, setEvaluationResult] = useState(null);
+
+  const recognitionRef = useRef(null);
+
+  // Speech Recognition setup
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (SpeechRecognition) {
+        const rec = new SpeechRecognition();
+        rec.continuous = true;
+        rec.interimResults = true;
+        rec.lang = 'en-US';
+
+        rec.onresult = (event) => {
+          let currentTrans = '';
+          for (let i = event.resultIndex; i < event.results.length; ++i) {
+            currentTrans += event.results[i][0].transcript;
+          }
+          setTranscription(currentTrans);
+        };
+
+        rec.onerror = (e) => {
+          console.error("Speech recognition error:", e);
+        };
+
+        rec.onend = () => {
+          setIsListening(false);
+        };
+
+        recognitionRef.current = rec;
+      }
+    }
+  }, []);
+
+  // Timer logic
   useEffect(() => {
     let interval = null;
     if (timerActive && timer > 0) {
@@ -86,6 +125,7 @@ export default function InterviewPrep() {
       }, 1000);
     } else if (timer === 0) {
       setTimerActive(false);
+      if (isListening) stopRecording();
     }
     return () => clearInterval(interval);
   }, [timerActive, timer]);
@@ -96,37 +136,74 @@ export default function InterviewPrep() {
     setTimer(60);
     setTimerActive(false);
     setShowTips(false);
+    setTranscription('');
+    setEvaluationResult(null);
   };
 
-  const handleStartTimer = () => {
-    setTimerActive(true);
-  };
-
-  const handlePauseTimer = () => {
-    setTimerActive(false);
-  };
-
-  const handleResetTimer = () => {
-    setTimer(60);
-    setTimerActive(false);
-  };
-
-  const handleNextQuestion = () => {
-    const list = QUESTIONS_DATA[role];
-    if (questionIndex < list.length - 1) {
-      setQuestionIndex(prev => prev + 1);
-      setTimer(60);
-      setTimerActive(false);
-      setShowTips(false);
+  const startRecording = () => {
+    if (recognitionRef.current) {
+      setTranscription('');
+      setEvaluationResult(null);
+      setIsListening(true);
+      setTimerActive(true);
+      try {
+        recognitionRef.current.start();
+      } catch (err) {
+        console.warn("Speech already started");
+      }
     }
   };
 
-  const handlePrevQuestion = () => {
-    if (questionIndex > 0) {
-      setQuestionIndex(prev => prev - 1);
-      setTimer(60);
+  const stopRecording = () => {
+    if (recognitionRef.current) {
+      recognitionRef.current.stop();
+      setIsListening(false);
       setTimerActive(false);
-      setShowTips(false);
+      
+      // Trigger transcription analysis
+      setTimeout(() => {
+        analyzeAnswer();
+      }, 500);
+    }
+  };
+
+  const analyzeAnswer = () => {
+    if (!transcription.trim()) return;
+
+    const lower = transcription.toLowerCase();
+    
+    // Check keywords for STAR methodology
+    const hasSituation = ["situation", "when", "customer", "working", "using", "client", "problem", "issue"].some(w => lower.includes(w));
+    const hasTask = ["task", "goal", "objective", "expect", "target", "wanted to", "had to"].some(w => lower.includes(w));
+    const hasAction = ["action", "resolved", "apologized", "listening", "explained", "stepped in", "called", "sent"].some(w => lower.includes(w));
+    const hasResult = ["result", "outcome", "consequently", "solved", "satisfied", "csat", "renewed", "closed"].some(w => lower.includes(w));
+
+    const sScore = hasSituation ? 95 : 30;
+    const tScore = hasTask ? 90 : 35;
+    const aScore = hasAction ? 95 : 40;
+    const rScore = hasResult ? 90 : 30;
+
+    const total = Math.round((sScore + tScore + aScore + rScore) / 4);
+
+    const critique = {
+      score: total,
+      situation: hasSituation ? "Valid context provided successfully." : "Missing core details: Describe the specific background or context of the hurdle.",
+      task: hasTask ? "Direct objectives defined." : "Define your role and what needed to be accomplished.",
+      action: hasAction ? "Clear, practical steps described." : "Be detailed: Explain the exact actions you took to solve the customer concern.",
+      result: hasResult ? "Strong outcome focus." : "Focus on closure: State what the resolution or CSAT result was."
+    };
+
+    setEvaluationResult(critique);
+
+    // Save history for Dashboard
+    if (typeof window !== 'undefined') {
+      const history = JSON.parse(localStorage.getItem('eminence_assessment_history') || '[]');
+      history.push({
+        title: `Mock STAR Prep: ${role.replace('-', ' ')}`,
+        score: total,
+        date: new Date().toLocaleDateString()
+      });
+      localStorage.setItem('eminence_assessment_history', JSON.stringify(history));
     }
   };
 
@@ -186,6 +263,30 @@ export default function InterviewPrep() {
           margin-right: 0.5rem;
           text-transform: uppercase;
         }
+
+        .live-mic-wave {
+          display: inline-flex;
+          align-items: center;
+          gap: 3px;
+          height: 20px;
+          margin-left: 1rem;
+        }
+
+        .wave-bar {
+          width: 3px;
+          height: 100%;
+          background: var(--purple-primary);
+          border-radius: 2px;
+          animation: wave-motion 1.2s ease-in-out infinite alternate;
+        }
+
+        .wave-bar:nth-child(2) { animation-delay: 0.2s; }
+        .wave-bar:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes wave-motion {
+          from { transform: scaleY(0.3); }
+          to { transform: scaleY(1); }
+        }
       `}} />
 
       <section className="page-hero">
@@ -238,7 +339,7 @@ export default function InterviewPrep() {
                 </div>
 
                 <div className="card" style={{ padding: '3.5rem 2.5rem', textAlign: 'center' }}>
-                  <h2 className="heading-md" style={{ lineHeight: 1.5 }}>
+                  <h2 className="heading-sm" style={{ lineHeight: 1.5 }}>
                     "{currentQuestion.question}"
                   </h2>
 
@@ -247,13 +348,51 @@ export default function InterviewPrep() {
                   </div>
 
                   <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: '2.5rem' }}>
-                    {!timerActive ? (
-                      <button onClick={handleStartTimer} className="btn btn-primary" style={{ padding: '0.5rem 1.5rem' }}>Start Timer</button>
+                    {isListening ? (
+                      <button onClick={stopRecording} className="btn btn-outline" style={{ borderColor: '#ef4444', color: '#ef4444', padding: '0.5rem 1.5rem' }}>
+                        ⏹️ Stop Recording
+                      </button>
                     ) : (
-                      <button onClick={handlePauseTimer} className="btn btn-outline" style={{ padding: '0.5rem 1.5rem', borderColor: '#f59e0b', color: '#f59e0b' }}>Pause</button>
+                      <button onClick={startRecording} className="btn btn-primary" style={{ padding: '0.5rem 1.5rem' }}>
+                        🎙️ Speak / Record Answer
+                      </button>
                     )}
-                    <button onClick={handleResetTimer} className="btn btn-outline" style={{ padding: '0.5rem 1.5rem' }}>Reset</button>
                   </div>
+
+                  {isListening && (
+                    <div style={{ margin: '1rem 0', color: 'var(--purple-primary)' }}>
+                      Listening... Speak your answer now.
+                      <div className="live-mic-wave">
+                        <div className="wave-bar"></div>
+                        <div className="wave-bar"></div>
+                        <div className="wave-bar"></div>
+                      </div>
+                    </div>
+                  )}
+
+                  {transcription && (
+                    <div className="card text-left" style={{ background: 'rgba(255,255,255,0.01)', border: '1px solid var(--color-border)', padding: '1rem 1.5rem', margin: '2rem 0' }}>
+                      <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 'bold' }}>Live Transcription:</span>
+                      <p style={{ marginTop: '0.25rem', fontSize: '0.95rem' }}>"{transcription}"</p>
+                    </div>
+                  )}
+
+                  {/* ── STAR SCORING EVALUATION DISPLAY ── */}
+                  {evaluationResult && (
+                    <div className="card text-left" style={{ border: '1px solid rgba(16, 185, 129, 0.2)', background: 'rgba(16,185,129,0.01)', padding: '2rem', margin: '2rem 0' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+                        <h3 className="heading-sm" style={{ color: '#10b981' }}>STAR Evaluation Report</h3>
+                        <span style={{ fontSize: '1.75rem', fontWeight: '800', color: '#10b981' }}>{evaluationResult.score}%</span>
+                      </div>
+                      
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
+                        <p><strong>Situation:</strong> {evaluationResult.situation}</p>
+                        <p><strong>Task:</strong> {evaluationResult.task}</p>
+                        <p><strong>Action:</strong> {evaluationResult.action}</p>
+                        <p><strong>Result:</strong> {evaluationResult.result}</p>
+                      </div>
+                    </div>
+                  )}
 
                   <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', borderTop: '1px solid var(--color-border)', paddingTop: '2rem' }}>
                     <button 
@@ -264,7 +403,14 @@ export default function InterviewPrep() {
                       {showTips ? "Hide STAR Advice" : "Show STAR Advice"}
                     </button>
                     <button 
-                      onClick={handlePrevQuestion} 
+                      onClick={() => {
+                        if (questionIndex > 0) {
+                          setQuestionIndex(prev => prev - 1);
+                          setTimer(60);
+                          setTranscription('');
+                          setEvaluationResult(null);
+                        }
+                      }} 
                       className="btn btn-outline" 
                       style={{ padding: '0.5rem 1.5rem' }} 
                       disabled={questionIndex === 0}
@@ -272,7 +418,14 @@ export default function InterviewPrep() {
                       Previous
                     </button>
                     <button 
-                      onClick={handleNextQuestion} 
+                      onClick={() => {
+                        if (questionIndex < questionsList.length - 1) {
+                          setQuestionIndex(prev => prev + 1);
+                          setTimer(60);
+                          setTranscription('');
+                          setEvaluationResult(null);
+                        }
+                      }} 
                       className="btn btn-outline" 
                       style={{ padding: '0.5rem 1.5rem' }} 
                       disabled={questionIndex === questionsList.length - 1}

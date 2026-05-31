@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { db } from '../../../lib/firebase';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 import Link from 'next/link';
 
 const FALLBACK_JOBS_DETAILS = {
@@ -56,6 +56,15 @@ export default function CareerDetails() {
   const router = useRouter();
   const [job, setJob] = useState(null);
   const [loading, setLoading] = useState(true);
+  
+  // Application Form State
+  const [showForm, setShowForm] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '', email: '', phone: '', experience: '', resume: ''
+  });
+  const [formSubmitted, setFormSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     const fetchJob = async () => {
@@ -83,6 +92,45 @@ export default function CareerDetails() {
     if (slug) fetchJob();
   }, [slug, router]);
 
+  const handleApplySubmit = async (e) => {
+    e.preventDefault();
+    if (!formData.name || !formData.email || !formData.phone) {
+      setError('Please fill out all required fields.');
+      return;
+    }
+    setError('');
+    setSubmitting(true);
+
+    const id = 'ES-' + Date.now();
+    const payload = {
+      ...formData,
+      id,
+      role: job.title,
+      status: 'Applied',
+      submittedAt: new Date().toISOString()
+    };
+
+    try {
+      await setDoc(doc(db, "candidates", id), payload);
+      
+      // Save application details locally so Candidate Portal can read it
+      const localApps = JSON.parse(localStorage.getItem('eminence_local_applications') || '[]');
+      localApps.push(payload);
+      localStorage.setItem('eminence_local_applications', JSON.stringify(localApps));
+
+      setFormSubmitted(true);
+    } catch (err) {
+      console.warn("Firestore error, saving locally:", err);
+      // Fallback local storage
+      const local = JSON.parse(localStorage.getItem('eminence_candidates') || '[]');
+      local.push(payload);
+      localStorage.setItem('eminence_candidates', JSON.stringify(local));
+      setFormSubmitted(true);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   if (loading) {
     return <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Loading job details...</div>;
   }
@@ -103,7 +151,7 @@ export default function CareerDetails() {
         }
         .apply-btn {
           background: var(--gold-gradient);
-          color: var(--navy-deep);
+          color: white;
           padding: 1rem 2rem;
           border-radius: var(--radius-sm);
           font-weight: 700;
@@ -111,7 +159,7 @@ export default function CareerDetails() {
           cursor: pointer;
           border: none;
           display: inline-block;
-          margin-top: 2rem;
+          margin-top: 1rem;
         }
       `}} />
       <section className="job-header-section">
@@ -139,18 +187,91 @@ export default function CareerDetails() {
             {job.requirements?.map((req, i) => <li key={i} style={{ marginBottom: '0.5rem' }}>{req}</li>)}
           </ul>
 
-          <div className="card" style={{ textAlign: 'center', padding: '3rem 2rem' }}>
-            <h3 className="heading-md" style={{ marginBottom: '1rem' }}>Interested in this position?</h3>
-            <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>Apply easily by chatting with our AI assistant.</p>
-            <button 
-              className="apply-btn"
-              onClick={() => {
-                const event = new CustomEvent('applyJob', { detail: { role: job.title } });
-                window.dispatchEvent(event);
-              }}
-            >
-              Apply with Eminence AI
-            </button>
+          <div className="card" style={{ padding: '3rem 2.5rem' }}>
+            {!showForm ? (
+              <div style={{ textAlign: 'center' }}>
+                <h3 className="heading-md" style={{ marginBottom: '1rem' }}>Interested in this position?</h3>
+                <p style={{ color: 'var(--text-secondary)', marginBottom: '2rem' }}>Apply directly to our recruitment pipeline in seconds.</p>
+                <button className="apply-btn" onClick={() => setShowForm(true)}>
+                  Apply for Role Now
+                </button>
+              </div>
+            ) : formSubmitted ? (
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>✅</div>
+                <h3 className="heading-md" style={{ marginBottom: '1rem' }}>Application Submitted!</h3>
+                <p style={{ color: 'var(--text-secondary)', marginBottom: '2rem' }}>Your candidate profile has been synced with our recruitment database.</p>
+                <Link href="/dashboard" className="btn btn-primary">Go to Candidate Dashboard</Link>
+              </div>
+            ) : (
+              <div>
+                <h3 className="heading-sm" style={{ marginBottom: '1.5rem' }}>Job Application Form</h3>
+                
+                {error && <div className="login-error" style={{ marginBottom: '1.5rem' }}>{error}</div>}
+
+                <form onSubmit={handleApplySubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+                  <div className="form-group">
+                    <label className="form-label">Full Name *</label>
+                    <input 
+                      type="text" 
+                      className="form-input" 
+                      required 
+                      value={formData.name}
+                      onChange={e => setFormData({ ...formData, name: e.target.value })}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label className="form-label">Email Address *</label>
+                    <input 
+                      type="email" 
+                      className="form-input" 
+                      required 
+                      value={formData.email}
+                      onChange={e => setFormData({ ...formData, email: e.target.value })}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label className="form-label">Phone Number *</label>
+                    <input 
+                      type="text" 
+                      className="form-input" 
+                      required 
+                      value={formData.phone}
+                      onChange={e => setFormData({ ...formData, phone: e.target.value })}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label className="form-label">Years of Experience *</label>
+                    <input 
+                      type="text" 
+                      className="form-input" 
+                      placeholder="e.g. 2 years" 
+                      required 
+                      value={formData.experience}
+                      onChange={e => setFormData({ ...formData, experience: e.target.value })}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label className="form-label">Resume summary/link</label>
+                    <textarea 
+                      className="form-input" 
+                      rows="4" 
+                      placeholder="Paste resume summary, skills, or cloud link here..."
+                      value={formData.resume}
+                      onChange={e => setFormData({ ...formData, resume: e.target.value })}
+                      style={{ height: 'auto', resize: 'vertical' }}
+                    ></textarea>
+                  </div>
+                  
+                  <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
+                    <button type="button" onClick={() => setShowForm(false)} className="btn btn-outline">Cancel</button>
+                    <button type="submit" disabled={submitting} className="btn btn-primary">
+                      {submitting ? 'Submitting...' : 'Submit Application'}
+                    </button>
+                  </div>
+                </form>
+              </div>
+            )}
           </div>
         </div>
       </section>

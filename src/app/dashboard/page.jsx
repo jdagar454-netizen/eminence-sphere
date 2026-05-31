@@ -148,6 +148,50 @@ export default function CandidateDashboard() {
                 </div>
               </div>
 
+              {/* Progress Visualizer Chart */}
+              <div className="card" style={{ padding: '2.5rem' }}>
+                <h3 className="heading-sm" style={{ marginBottom: '1.5rem', borderBottom: '1px solid var(--color-border)', paddingBottom: '0.75rem' }}>
+                  📈 Performance Learning Curve
+                </h3>
+                <div style={{ height: '220px', width: '100%', position: 'relative', marginTop: '1rem' }}>
+                  <svg viewBox="0 0 500 200" style={{ width: '100%', height: '100%', overflow: 'visible' }}>
+                    {/* Grid lines */}
+                    <line x1="0" y1="50" x2="500" y2="50" stroke="rgba(255,255,255,0.05)" strokeDasharray="5,5" />
+                    <line x1="0" y1="100" x2="500" y2="100" stroke="rgba(255,255,255,0.05)" strokeDasharray="5,5" />
+                    <line x1="0" y1="150" x2="500" y2="150" stroke="rgba(255,255,255,0.05)" strokeDasharray="5,5" />
+                    
+                    {/* SVG Path */}
+                    <path 
+                      d="M 50 150 Q 150 100 250 80 T 450 40" 
+                      fill="none" 
+                      stroke="url(#chart-grad)" 
+                      strokeWidth="4" 
+                      strokeLinecap="round" 
+                    />
+                    
+                    {/* Data Points */}
+                    <circle cx="50" cy="150" r="6" fill="var(--purple-primary)" />
+                    <circle cx="200" cy="100" r="6" fill="var(--purple-primary)" />
+                    <circle cx="320" cy="70" r="6" fill="var(--purple-primary)" />
+                    <circle cx="450" cy="40" r="6" fill="var(--purple-primary)" />
+                    
+                    {/* Labels */}
+                    <text x="50" y="180" fill="var(--text-muted)" fontSize="10" textAnchor="middle">Attempt 1</text>
+                    <text x="200" y="180" fill="var(--text-muted)" fontSize="10" textAnchor="middle">Attempt 2</text>
+                    <text x="320" y="180" fill="var(--text-muted)" fontSize="10" textAnchor="middle">Attempt 3</text>
+                    <text x="450" y="180" fill="var(--text-muted)" fontSize="10" textAnchor="middle">Current</text>
+                    
+                    {/* Gradients */}
+                    <defs>
+                      <linearGradient id="chart-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#7C3AED" />
+                        <stop offset="100%" stopColor="#A78BFA" />
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                </div>
+              </div>
+
               {/* Active Applications */}
               <div className="card" style={{ padding: '2.5rem' }}>
                 <h3 className="heading-sm" style={{ marginBottom: '1.5rem', borderBottom: '1px solid var(--color-border)', paddingBottom: '0.75rem' }}>

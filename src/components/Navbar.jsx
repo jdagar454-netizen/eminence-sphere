@@ -88,6 +88,7 @@ export default function Navbar() {
             <li><Link href="/careers" className={`nav-link ${isActive('/careers')}`}>Careers</Link></li>
             <li><Link href="/pricing" className={`nav-link ${isActive('/pricing')}`}>Pricing</Link></li>
             <li><Link href="/grader" className={`nav-link ${isActive('/grader')}`}>Resume Grader</Link></li>
+            <li><Link href="/builder" className={`nav-link ${isActive('/builder')}`}>Resume Builder</Link></li>
             <li><Link href="/interview-prep" className={`nav-link ${isActive('/interview-prep')}`}>Interview Prep</Link></li>
             <li><Link href="/practice-arena" className={`nav-link ${isActive('/practice-arena')}`}>Practice Arena</Link></li>
             <li><Link href="/assessments" className={`nav-link ${isActive('/assessments')}`}>Assessments</Link></li>
@@ -146,6 +147,7 @@ export default function Navbar() {
         <Link href="/careers" className={`nav-link ${isActive('/careers')}`} onClick={closeMenu}>Careers</Link>
         <Link href="/pricing" className={`nav-link ${isActive('/pricing')}`} onClick={closeMenu}>Pricing</Link>
         <Link href="/grader" className={`nav-link ${isActive('/grader')}`} onClick={closeMenu}>Resume Grader</Link>
+        <Link href="/builder" className={`nav-link ${isActive('/builder')}`} onClick={closeMenu}>Resume Builder</Link>
         <Link href="/interview-prep" className={`nav-link ${isActive('/interview-prep')}`} onClick={closeMenu}>Interview Prep</Link>
         <Link href="/practice-arena" className={`nav-link ${isActive('/practice-arena')}`} onClick={closeMenu}>Practice Arena</Link>
         <Link href="/assessments" className={`nav-link ${isActive('/assessments')}`} onClick={closeMenu}>Assessments</Link>
