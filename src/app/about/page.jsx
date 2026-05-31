@@ -25,7 +25,7 @@ export default function About() {
             <div className="about-story-text reveal">
               <div className="section-tag" style={{ justifyContent: "flex-start" }}>Who We Are</div>
               <h2 className="heading-lg">A Legacy of Strategic Excellence</h2>
-              <p>At Eminence Sphere, we don’t just fill vacancies—we build high-performing teams. As a rapidly growing recruitment and consulting partner, we specialize in driving workforce success for the BPO, ITES, and Non-IT sectors.</p>
+              <p>At Eminence Sphere, we don’t just fill vacancies—we build high-performing teams. As a rapidly growing recruitment and consulting partner, we specialise in driving workforce success for the BPO, ITES, and Non-IT sectors.</p>
               <p>From bulk hiring initiatives to precision candidate screening, we handle the entire recruitment lifecycle so you can focus on scaling your business.</p>
               <p>By bridging the gap between top-tier talent and industry-leading employers, we guarantee faster closures, exceptional candidate quality, and an entirely seamless hiring experience.</p>
               <Link href="/contact" className="btn btn-primary" style={{ marginTop: "1.5rem" }} id="about-cta">
@@ -187,7 +187,7 @@ export default function About() {
               <div className="team-avatar">JK</div>
               <div className="team-name">James Kariuki</div>
               <div className="team-role">Director of Support Placements</div>
-              <p className="team-bio">James manages our global customer support talent acquisition and matching programs, placing hundreds of agents annually.</p>
+              <p className="team-bio">James manages our global Customer Support talent acquisition and matching programs, placing hundreds of agents annually.</p>
             </div>
             <div className="card team-card reveal reveal-delay-1">
               <div className="team-avatar">NP</div>
@@ -199,7 +199,7 @@ export default function About() {
               <div className="team-avatar">DL</div>
               <div className="team-name">David Lim</div>
               <div className="team-role">Head of CX &amp; Support Operations</div>
-              <p className="team-bio">David guides our customer service quality management practices, optimizing support delivery for our enterprise partners.</p>
+              <p className="team-bio">David guides our customer service quality management practices, optimising support delivery for our enterprise partners.</p>
             </div>
             <div className="card team-card reveal reveal-delay-3">
               <div className="team-avatar">AM</div>

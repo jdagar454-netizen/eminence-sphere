@@ -359,7 +359,7 @@ export default function PracticeArena() {
         <div className="container">
           <div className="badge badge-gold" style={{ marginBottom: "1.25rem" }}>Simulators</div>
           <h1 className="heading-xl page-hero-title">Support <span className="text-gold">Practice Arena</span></h1>
-          <p className="page-hero-subtitle">Engage in interactive customer support sessions to grade your communication, empathy, and speed metrics.</p>
+          <p className="page-hero-subtitle">Engage in interactive Customer Support sessions to grade your communication, empathy, and speed metrics.</p>
         </div>
       </section>
 
@@ -421,7 +421,6 @@ export default function PracticeArena() {
                         style={{ flexGrow: 1, padding: '0.85rem 1.25rem', background: 'rgba(255,255,255,0.02)', border: '1px solid var(--color-border)', borderRadius: 'var(--radius-sm)', color: 'var(--text-primary)' }}
                         placeholder="Type your professional response to client concern..."
                         value={chatInput}
-                        onChange={e => setInputValue(e.target.value) /* Wait, let's make sure it updates the correct input state */}
                         onChange={e => setChatInput(e.target.value)}
                       />
                       <button type="submit" className="btn btn-primary" style={{ padding: '0 2rem' }}>Send</button>

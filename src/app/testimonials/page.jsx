@@ -152,7 +152,7 @@ export default function Testimonials() {
                   <span>E-Commerce Sector</span>
                 </div>
               </div>
-              <p style={{ color: "var(--text-secondary)", fontSize: ".9375rem", lineHeight: 1.75 }}>A scaling e-commerce brand needed to build a 24/7 customer support operation for their peak holiday season. We sourced, trained, and placed 45+ customer support representatives within 4 weeks, maintaining a 94% CSAT.</p>
+              <p style={{ color: "var(--text-secondary)", fontSize: ".9375rem", lineHeight: 1.75 }}>A scaling e-commerce brand needed to build a 24/7 Customer Support operation for their peak holiday season. We sourced, trained, and placed 45+ Customer Support representatives within 4 weeks, maintaining a 94% CSAT.</p>
               <div className="case-study-result">
                 <div className="result-stat">
                   <div className="result-value">45+</div>
@@ -206,7 +206,7 @@ export default function Testimonials() {
                   <span>SaaS Sector</span>
                 </div>
               </div>
-              <p style={{ color: "var(--text-secondary)", fontSize: ".9375rem", lineHeight: 1.75 }}>A fast-growing SaaS firm needed to outsource and standardise their tier-1 support operations. We established a virtual dedicated support desk with remote customer support representatives, streamlining ticket resolutions.</p>
+              <p style={{ color: "var(--text-secondary)", fontSize: ".9375rem", lineHeight: 1.75 }}>A fast-growing SaaS firm needed to outsource and standardise their tier-1 support operations. We established a virtual dedicated support desk with remote Customer Support representatives, streamlining ticket resolutions.</p>
               <div className="case-study-result">
                 <div className="result-stat">
                   <div className="result-value">35%</div>

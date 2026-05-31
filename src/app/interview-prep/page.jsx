@@ -50,7 +50,7 @@ const QUESTIONS_DATA = {
       id: 2,
       question: "What is your step-by-step methodology when a customer reports that their service/app is completely offline?",
       starTips: {
-        situation: "Presents a generic server blackout scenario.",
+        situation: "Present a generic server blackout scenario.",
         task: "Goal: diagnose root cause immediately (local vs global, ISP vs server).",
         action: "Explain checks: ping tests, console logs, network routes, checking AWS/Azure console status.",
         result: "Result: downtime minimized, resolution logged in Knowledge Base."

@@ -259,7 +259,7 @@ export default function Pricing() {
                   </li>
                   <li>
                     <svg className="check-icon-svg" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"></path></svg>
-                    Dedicated Account executive
+                    Dedicated Account Executive
                   </li>
                   <li>
                     <svg className="check-icon-svg" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"></path></svg>

@@ -151,7 +151,7 @@ export default function Home() {
                 <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
               </div>
               <h3 className="heading-sm">Job Recruitment</h3>
-              <p style={{ color: 'var(--text-secondary)', fontSize: '.9375rem', lineHeight: 1.7, margin: '0.75rem 0 1.25rem' }}>Find the perfect match with our end-to-end recruitment campaigns, direct placements, and virtual customer support hiring.</p>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '.9375rem', lineHeight: 1.7, margin: '0.75rem 0 1.25rem' }}>Find the perfect match with our end-to-end recruitment campaigns, direct placements, and virtual Customer Support hiring.</p>
               <Link href="/services#job-recruitment" className="btn btn-ghost">
                 Learn More
                 <svg className="btn-icon" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3.75 9h10.5M9.75 4.5L14.25 9l-4.5 4.5"/></svg>
