@@ -9,7 +9,7 @@ import Link from 'next/link';
 const FALLBACK_JOBS_DETAILS = {
   "customer-support-wfh": {
     title: "Customer Support Representative (WFH)",
-    department: "Customer support & BPO",
+    department: "Customer Support & BPO",
     location: "Remote (Work From Home)",
     type: "Full-Time",
     salary: "₹18,000 - ₹25,000 per month",

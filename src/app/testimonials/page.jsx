@@ -59,7 +59,7 @@ export default function Testimonials() {
                 <div className="author-avatar">CA</div>
                 <div>
                   <div className="author-name">Chhavi Attri</div>
-                  <div className="author-title">Senior Customer support Representative</div>
+                  <div className="author-title">Senior Customer Support Representative</div>
                 </div>
               </div>
             </div>
@@ -71,7 +71,7 @@ export default function Testimonials() {
                 <div className="author-avatar">NT</div>
                 <div>
                   <div className="author-name">Nitika Tyagi</div>
-                  <div className="author-title">Senior Customer support Representative</div>
+                  <div className="author-title">Senior Customer Support Representative</div>
                 </div>
               </div>
             </div>
@@ -83,7 +83,7 @@ export default function Testimonials() {
                 <div className="author-avatar">PS</div>
                 <div>
                   <div className="author-name">Prince Saroha</div>
-                  <div className="author-title">Virtual Senior Customer support Representative</div>
+                  <div className="author-title">Virtual Senior Customer Support Representative</div>
                 </div>
               </div>
             </div>
