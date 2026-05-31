@@ -23,7 +23,7 @@ export default function ServiceDetails() {
           router.push('/not-found');
         }
       } catch (err) {
-        console.error("Error fetching service details:", err);
+        console.warn("Error fetching service details:", err.message || err);
       } finally {
         setLoading(false);
       }

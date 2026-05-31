@@ -44,6 +44,30 @@ export default function Chatbot() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Listen for dynamic career page application events
+  useEffect(() => {
+    const handleApplyJob = (e) => {
+      const selectedRole = e.detail.role;
+      setIsOpen(true);
+      setCandidateData({
+        name: '', email: '', phone: '', role: selectedRole, experience: '', resume: ''
+      });
+      setStep(1);
+      const timeString = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      setMessages([
+        {
+          id: Date.now(),
+          text: `Hello! I see you are applying for the ${selectedRole} position. Let's guide you through compiling your profile. To begin, what is your full name?`,
+          sender: 'bot',
+          time: timeString
+        }
+      ]);
+    };
+
+    window.addEventListener('applyJob', handleApplyJob);
+    return () => window.removeEventListener('applyJob', handleApplyJob);
+  }, []);
+
   const triggerGreeting = () => {
     botReply("Hello! I am Eminence AI, your virtual career assistant. I can guide you through creating and submitting your candidate profile for our current recruitment pipeline. To begin, what is your full name?", () => {
       setStep(1);
@@ -88,7 +112,11 @@ export default function Chatbot() {
         break;
       case 3:
         setCandidateData(prev => ({ ...prev, phone: userInput }));
-        botReply("Got it. Which position at Eminence Sphere are you interested in? You can select one from the options below or type your desired role.", () => setStep(4));
+        if (candidateData.role) {
+          botReply(`Excellent choice. How many years of relevant professional experience do you have in ${candidateData.role}?`, () => setStep(5));
+        } else {
+          botReply("Got it. Which position at Eminence Sphere are you interested in? You can select one from the options below or type your desired role.", () => setStep(4));
+        }
         break;
       case 4:
         setCandidateData(prev => ({ ...prev, role: userInput }));
@@ -132,10 +160,10 @@ export default function Chatbot() {
       })
       .then(res => res.json())
       .then(data => console.log("Notification status:", data))
-      .catch(err => console.error("Notification trigger failed:", err));
+      .catch(err => console.warn("Notification trigger failed:", err.message || err));
 
     } catch (e) {
-      console.error("Firestore error, saving locally:", e);
+      console.warn("Firestore error, saving locally:", e.message || e);
       let localCands = JSON.parse(localStorage.getItem('eminence_candidates') || '[]');
       localCands.push(payload);
       localStorage.setItem('eminence_candidates', JSON.stringify(localCands));

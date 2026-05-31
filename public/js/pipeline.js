@@ -39,6 +39,9 @@ const EMAILJS_TEMPLATE_ID = 'template_crc0amt';
   // Dashboard elements
   const container  = document.getElementById('candidates-container');
   const filterSelect = document.getElementById('role-filter');
+  const sortSelect = document.getElementById('sort-filter');
+  const searchInput = document.getElementById('search-input');
+  const exportCsvBtn = document.getElementById('export-csv-btn');
   const clearBtn   = document.getElementById('clear-all-btn');
   const mTotal     = document.getElementById('metric-total');
   const mSupport   = document.getElementById('metric-support');
@@ -408,6 +411,8 @@ const EMAILJS_TEMPLATE_ID = 'template_crc0amt';
   function renderPipeline(candidates) {
     if (!filterSelect || !mTotal || !mSupport || !mVirtual || !mLastDate || !container) return;
     const filterRole = filterSelect.value;
+    const searchVal = searchInput ? searchInput.value.toLowerCase().trim() : '';
+    const sortVal = sortSelect ? sortSelect.value : 'date-desc';
 
     // 1. Calculate Metrics
     mTotal.textContent = candidates.length;
@@ -423,9 +428,42 @@ const EMAILJS_TEMPLATE_ID = 'template_crc0amt';
     }
 
     // 2. Filter list
-    const filtered = filterRole === 'ALL' 
-      ? candidates 
-      : candidates.filter(c => c.role === filterRole);
+    let filtered = [...candidates];
+    
+    // Filter by Position
+    if (filterRole !== 'ALL') {
+      filtered = filtered.filter(c => c.role === filterRole);
+    }
+
+    // Filter by Search Query
+    if (searchVal) {
+      filtered = filtered.filter(c => 
+        (c.name && c.name.toLowerCase().includes(searchVal)) ||
+        (c.email && c.email.toLowerCase().includes(searchVal)) ||
+        (c.phone && c.phone.toLowerCase().includes(searchVal))
+      );
+    }
+
+    // Sort list
+    filtered.sort((a, b) => {
+      if (sortVal === 'date-desc') {
+        return new Date(b.submittedAt || 0) - new Date(a.submittedAt || 0);
+      } else if (sortVal === 'date-asc') {
+        return new Date(a.submittedAt || 0) - new Date(b.submittedAt || 0);
+      } else if (sortVal === 'name-asc') {
+        return (a.name || '').localeCompare(b.name || '');
+      } else if (sortVal === 'name-desc') {
+        return (b.name || '').localeCompare(a.name || '');
+      } else if (sortVal === 'experience-desc') {
+        const getExpNum = (str) => {
+          if (!str) return 0;
+          const match = str.match(/\d+/);
+          return match ? parseInt(match[0], 10) : 0;
+        };
+        return getExpNum(b.experience) - getExpNum(a.experience);
+      }
+      return 0;
+    });
 
     // 3. Render
     container.innerHTML = '';
@@ -443,6 +481,9 @@ const EMAILJS_TEMPLATE_ID = 'template_crc0amt';
     filtered.forEach(c => {
       const card = document.createElement('div');
       card.className = 'candidate-row-card';
+      const currentStatus = c.status || 'Applied';
+      const statusClass = currentStatus.toLowerCase();
+
       card.innerHTML = `
         <div class="candidate-name-col">
           <span class="cand-name">${escapeHTML(c.name)}</span>
@@ -457,6 +498,15 @@ const EMAILJS_TEMPLATE_ID = 'template_crc0amt';
         <div class="candidate-role-col">
           <span class="cand-role">${escapeHTML(c.role)}</span>
           <span class="cand-exp">${escapeHTML(c.experience)} exp</span>
+          <div>
+            <select class="status-select status-${statusClass}" data-id="${c.id}">
+              <option value="Applied" ${currentStatus === 'Applied' ? 'selected' : ''}>Applied</option>
+              <option value="Screening" ${currentStatus === 'Screening' ? 'selected' : ''}>Screening</option>
+              <option value="Interviewing" ${currentStatus === 'Interviewing' ? 'selected' : ''}>Interviewing</option>
+              <option value="Placed" ${currentStatus === 'Placed' ? 'selected' : ''}>Placed</option>
+              <option value="Rejected" ${currentStatus === 'Rejected' ? 'selected' : ''}>Rejected</option>
+            </select>
+          </div>
         </div>
 
         <div class="candidate-resume-col">
@@ -468,6 +518,12 @@ const EMAILJS_TEMPLATE_ID = 'template_crc0amt';
           <button class="action-btn action-btn-delete" data-id="${c.id}">Delete</button>
         </div>
       `;
+
+      // Add status change listener
+      card.querySelector('.status-select').addEventListener('change', (e) => {
+        const newStatus = e.target.value;
+        updateCandidateStatus(c.id, newStatus);
+      });
 
       // Add button click listeners
       card.querySelector('.action-btn-download').addEventListener('click', () => {
@@ -488,6 +544,94 @@ const EMAILJS_TEMPLATE_ID = 'template_crc0amt';
 
       container.appendChild(card);
     });
+  }
+
+  function updateCandidateStatus(id, newStatus) {
+    if (typeof firebase !== 'undefined' && firebase.apps.length > 0 && firebase.auth().currentUser) {
+      firebase.firestore().collection("candidates").doc(id).update({ status: newStatus })
+        .then(() => console.log("Candidate status updated in Firestore."))
+        .catch(err => console.error("Error updating status:", err));
+    } else {
+      let candidates = JSON.parse(localStorage.getItem('eminence_candidates')) || [];
+      candidates = candidates.map(c => c.id === id ? { ...c, status: newStatus } : c);
+      localStorage.setItem('eminence_candidates', JSON.stringify(candidates));
+      loadPipelineLocal();
+    }
+  }
+
+  function exportCandidatesToCSV() {
+    const filterRole = filterSelect ? filterSelect.value : 'ALL';
+    const sortVal = sortSelect ? sortSelect.value : 'date-desc';
+    const searchVal = searchInput ? searchInput.value.toLowerCase().trim() : '';
+
+    let list = [...currentCandidates];
+
+    // Filter by Position
+    if (filterRole !== 'ALL') {
+      list = list.filter(c => c.role === filterRole);
+    }
+    
+    // Filter by Search Query
+    if (searchVal) {
+      list = list.filter(c => 
+        (c.name && c.name.toLowerCase().includes(searchVal)) ||
+        (c.email && c.email.toLowerCase().includes(searchVal)) ||
+        (c.phone && c.phone.toLowerCase().includes(searchVal))
+      );
+    }
+
+    // Sort list
+    list.sort((a, b) => {
+      if (sortVal === 'date-desc') {
+        return new Date(b.submittedAt || 0) - new Date(a.submittedAt || 0);
+      } else if (sortVal === 'date-asc') {
+        return new Date(a.submittedAt || 0) - new Date(b.submittedAt || 0);
+      } else if (sortVal === 'name-asc') {
+        return (a.name || '').localeCompare(b.name || '');
+      } else if (sortVal === 'name-desc') {
+        return (b.name || '').localeCompare(a.name || '');
+      } else if (sortVal === 'experience-desc') {
+        const getExpNum = (str) => {
+          if (!str) return 0;
+          const match = str.match(/\d+/);
+          return match ? parseInt(match[0], 10) : 0;
+        };
+        return getExpNum(b.experience) - getExpNum(a.experience);
+      }
+      return 0;
+    });
+
+    if (list.length === 0) {
+      alert("No candidates to export.");
+      return;
+    }
+
+    const headers = ['Candidate ID', 'Name', 'Email', 'Phone', 'Role', 'Experience', 'Status', 'Submitted At', 'Resume Summary'];
+    const rows = list.map(c => [
+      c.id || '',
+      c.name || '',
+      c.email || '',
+      c.phone || '',
+      c.role || '',
+      c.experience || '',
+      c.status || 'Applied',
+      c.submittedAt || '',
+      c.resume || ''
+    ]);
+
+    const csvContent = [
+      headers.join(','),
+      ...rows.map(row => row.map(val => `"${String(val).replace(/"/g, '""')}"`).join(','))
+    ].join('\n');
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.setAttribute("href", url);
+    link.setAttribute("download", `Eminence_Sphere_Candidates_Export_${new Date().toISOString().slice(0,10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   }
 
   function deleteCandidate(id) {
@@ -529,6 +673,21 @@ const EMAILJS_TEMPLATE_ID = 'template_crc0amt';
   // Filter select handler
   if (filterSelect) {
     filterSelect.addEventListener('change', () => renderPipeline(currentCandidates));
+  }
+
+  // Sort select handler
+  if (sortSelect) {
+    sortSelect.addEventListener('change', () => renderPipeline(currentCandidates));
+  }
+
+  // Search input handler
+  if (searchInput) {
+    searchInput.addEventListener('input', () => renderPipeline(currentCandidates));
+  }
+
+  // Export CSV handler
+  if (exportCsvBtn) {
+    exportCsvBtn.addEventListener('click', exportCandidatesToCSV);
   }
 
 })();

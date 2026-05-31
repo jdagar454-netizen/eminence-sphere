@@ -54,6 +54,40 @@
   --max-width:          1200px;
 }
 
+/* ── Dark Theme Overrides ── */
+html[data-theme="dark"] {
+  --color-bg:           #07091C;
+  --color-bg-2:         #0C0E28;
+  --color-surface:      #0F1133;
+  --color-surface-hover: #161A4E;
+  --color-border:       #1F2456;
+  --color-border-hover: #A78BFA;
+
+  --purple-primary:     #A78BFA;
+  --purple-dark:        #7C3AED;
+  --purple-light:       #C4B5FD;
+  --purple-pale:        rgba(167, 139, 250, 0.08);
+  --purple-gradient:    linear-gradient(135deg, #A78BFA 0%, #7C3AED 50%, #A78BFA 100%);
+
+  --gold-primary:       #A78BFA;
+  --gold-light:         #C4B5FD;
+  --gold-pale:          rgba(167, 139, 250, 0.08);
+  --gold-gradient:      linear-gradient(135deg, #A78BFA 0%, #7C3AED 50%, #A78BFA 100%);
+
+  --text-primary:       #F3F4F6;
+  --text-secondary:     #9CA3AF;
+  --text-muted:         #6B7280;
+
+  --navy-deep:          #07091C;
+  --navy-mid:           #0C0E28;
+  --navy-light:         #1F2456;
+
+  --shadow-gold:        0 0 40px rgba(167, 139, 250, 0.08);
+  --shadow-card:        0 1px 3px rgba(0, 0, 0, 0.4), 0 4px 16px rgba(0, 0, 0, 0.3);
+  --shadow-card-hover:  0 4px 24px rgba(167, 139, 250, 0.15), 0 8px 32px rgba(0, 0, 0, 0.4);
+  --shadow-nav:         0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
 /* ── Reset & Base ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -69,6 +103,7 @@ body {
   line-height: 1.6;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 img { display: block; max-width: 100%; }

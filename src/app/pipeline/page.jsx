@@ -251,6 +251,49 @@ export default function Pipeline() {
           border-color: #e05c5c;
         }
 
+        /* Status badges and dropdowns */
+        .status-select {
+          background: var(--color-bg-2);
+          border: 1px solid var(--color-border);
+          padding: 0.35rem 0.6rem;
+          border-radius: var(--radius-sm);
+          font-size: 0.75rem;
+          font-weight: 600;
+          outline: none;
+          cursor: pointer;
+          transition: border-color var(--transition-fast);
+          margin-top: 0.5rem;
+          display: inline-block;
+        }
+        .status-select:focus {
+          border-color: var(--gold-primary);
+        }
+        .status-applied {
+          color: #3498db;
+          border-color: rgba(52, 152, 219, 0.4);
+          background: rgba(52, 152, 219, 0.1);
+        }
+        .status-screening {
+          color: #f39c12;
+          border-color: rgba(243, 156, 18, 0.4);
+          background: rgba(243, 156, 18, 0.1);
+        }
+        .status-interviewing {
+          color: #9b59b6;
+          border-color: rgba(155, 89, 182, 0.4);
+          background: rgba(155, 89, 182, 0.1);
+        }
+        .status-placed {
+          color: #2ecc71;
+          border-color: rgba(46, 204, 113, 0.4);
+          background: rgba(46, 204, 113, 0.1);
+        }
+        .status-rejected {
+          color: #e74c3c;
+          border-color: rgba(231, 76, 60, 0.4);
+          background: rgba(231, 76, 60, 0.1);
+        }
+
         /* Empty state */
         .empty-state {
           text-align: center;
@@ -727,6 +770,9 @@ export default function Pipeline() {
                 <p>Hiring admin console to view and manage candidate details collected by the AI recruitment chatbot.</p>
               </div>
               <div style={{ display: "flex", gap: "1rem", alignItems: "center", flexWrap: "wrap" }}>
+                <button className="btn btn-outline" id="export-csv-btn" style={{ borderColor: "var(--gold-primary)", color: "var(--gold-primary)", padding: "0.5rem 1.25rem" }}>
+                  Export CSV
+                </button>
                 <button className="btn btn-outline" id="clear-all-btn" style={{ borderColor: "#e05c5c", color: "#e05c5c" }}>
                   Clear All Candidates
                 </button>
@@ -758,17 +804,35 @@ export default function Pipeline() {
 
             {/* Filter Controls */}
             <div className="filter-bar">
-              <div className="filter-group">
-                <span className="filter-label">Filter by Position:</span>
-                <select className="filter-select" id="role-filter" defaultValue="ALL">
-                  <option value="ALL">All Roles</option>
-                  <option value="Customer Support Representative">Customer Support Rep</option>
-                  <option value="Senior Customer Support Representative">Senior Customer Support Rep</option>
-                  <option value="Virtual Support Representative">Virtual Support Rep</option>
-                  <option value="Tech Support Specialist">Tech Support Specialist</option>
-                  <option value="Operations Team Lead">Operations Team Lead</option>
-                  <option value="Other">Other</option>
-                </select>
+              <div className="filter-group" style={{ flexWrap: "wrap", gap: "1rem" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+                  <span className="filter-label">Filter by Position:</span>
+                  <select className="filter-select" id="role-filter" defaultValue="ALL">
+                    <option value="ALL">All Roles</option>
+                    <option value="Customer Support Representative">Customer Support Rep</option>
+                    <option value="Senior Customer Support Representative">Senior Customer Support Rep</option>
+                    <option value="Virtual Support Representative">Virtual Support Rep</option>
+                    <option value="Tech Support Specialist">Tech Support Specialist</option>
+                    <option value="Operations Team Lead">Operations Team Lead</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+
+                <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+                  <span className="filter-label">Sort by:</span>
+                  <select className="filter-select" id="sort-filter" defaultValue="date-desc">
+                    <option value="date-desc">Date (Newest)</option>
+                    <option value="date-asc">Date (Oldest)</option>
+                    <option value="name-asc">Name (A-Z)</option>
+                    <option value="name-desc">Name (Z-A)</option>
+                    <option value="experience-desc">Experience (High-Low)</option>
+                  </select>
+                </div>
+
+                <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+                  <span className="filter-label">Search:</span>
+                  <input type="text" id="search-input" className="filter-select" placeholder="Name, email, phone..." style={{ minWidth: "200px" }} />
+                </div>
               </div>
               <div style={{ fontSize: "0.875rem", color: "var(--text-secondary)" }}>
                 Secure Cloud Database (Firebase)

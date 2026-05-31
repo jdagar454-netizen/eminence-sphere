@@ -70,7 +70,7 @@ export default function CareerDetails() {
           router.push('/not-found');
         }
       } catch (err) {
-        console.error("Error fetching job details, using fallbacks:", err);
+        console.warn("Error fetching job details, using fallbacks:", err.message || err);
         if (FALLBACK_JOBS_DETAILS[slug]) {
           setJob({ id: slug, ...FALLBACK_JOBS_DETAILS[slug] });
         } else {
@@ -145,8 +145,8 @@ export default function CareerDetails() {
             <button 
               className="apply-btn"
               onClick={() => {
-                const launcher = document.querySelector('.es-chatbot-launcher');
-                if (launcher) launcher.click();
+                const event = new CustomEvent('applyJob', { detail: { role: job.title } });
+                window.dispatchEvent(event);
               }}
             >
               Apply with Eminence AI
