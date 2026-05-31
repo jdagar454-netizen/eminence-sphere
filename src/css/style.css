@@ -88,6 +88,12 @@ html[data-theme="dark"] {
   --shadow-nav:         0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
+html[data-theme="dark"] .nav-logo img,
+html[data-theme="dark"] footer img,
+html[data-theme="dark"] img[alt*="Eminence Sphere"] {
+  filter: brightness(0) invert(1);
+}
+
 /* ── Reset & Base ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
