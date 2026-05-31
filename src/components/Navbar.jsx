@@ -89,6 +89,7 @@ export default function Navbar() {
             <li><Link href="/pricing" className={`nav-link ${isActive('/pricing')}`}>Pricing</Link></li>
             <li><Link href="/grader" className={`nav-link ${isActive('/grader')}`}>Resume Grader</Link></li>
             <li><Link href="/interview-prep" className={`nav-link ${isActive('/interview-prep')}`}>Interview Prep</Link></li>
+            <li><Link href="/practice-arena" className={`nav-link ${isActive('/practice-arena')}`}>Practice Arena</Link></li>
           </ul>
 
           <div className="nav-actions">
@@ -143,6 +144,7 @@ export default function Navbar() {
         <Link href="/pricing" className={`nav-link ${isActive('/pricing')}`} onClick={closeMenu}>Pricing</Link>
         <Link href="/grader" className={`nav-link ${isActive('/grader')}`} onClick={closeMenu}>Resume Grader</Link>
         <Link href="/interview-prep" className={`nav-link ${isActive('/interview-prep')}`} onClick={closeMenu}>Interview Prep</Link>
+        <Link href="/practice-arena" className={`nav-link ${isActive('/practice-arena')}`} onClick={closeMenu}>Practice Arena</Link>
         <Link href="/contact" className={`nav-link nav-cta ${isActive('/contact')}`} onClick={closeMenu}>Get in Touch</Link>
       </nav>
     </>
