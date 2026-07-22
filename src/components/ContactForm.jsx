@@ -84,7 +84,7 @@ export default function ContactForm() {
       <div className="form-grid-2">
         <div className="form-group">
           <label className="form-label" htmlFor="phone">Phone Number</label>
-          <input className="form-input" type="tel" id="phone" name="phone" value={formData.phone} onChange={handleChange} placeholder="+91 121 315 9030" />
+          <input className="form-input" type="tel" id="phone" name="phone" value={formData.phone} onChange={handleChange} placeholder="+91 63965 82575" />
         </div>
         <div className="form-group">
           <label className="form-label" htmlFor="company">Company Name</label>

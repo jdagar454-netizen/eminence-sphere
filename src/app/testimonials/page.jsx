@@ -88,17 +88,6 @@ export default function Testimonials() {
               </div>
             </div>
 
-            <div className="card testimonial-card">
-              <div className="quote-mark">"</div>
-              <p className="testimonial-text">My career trajectory changed completely after associating with Eminence Sphere. The interview coaching and training program prepared me for exact scenarios. Highly recommended!</p>
-              <div className="testimonial-author">
-                <div className="author-avatar">NC</div>
-                <div>
-                  <div className="author-name">Nikku</div>
-                  <div className="author-title">Special Client of Eminence</div>
-                </div>
-              </div>
-            </div>
 
           </div>
         </div>

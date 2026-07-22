@@ -45,7 +45,7 @@ export default function Footer() {
             </div>
             <div className="footer-contact-item">
               <svg className="footer-contact-icon" viewBox="0 0 16 16"><path d="M14.5 11.5l-2-2a1.4 1.4 0 00-2 0l-1 1C8 10 6 8 5.5 6.5l1-1a1.4 1.4 0 000-2l-2-2a1.4 1.4 0 00-2 0C1 3 1 7.5 6.5 13S13 15 14.5 13.5a1.4 1.4 0 000-2z"/></svg>
-              <div className="footer-contact-text">+91 121 315 9030</div>
+              <div className="footer-contact-text">+91 63965 82575</div>
             </div>
             <div className="footer-contact-item" style={{ alignItems: 'flex-start' }}>
               <svg className="footer-contact-icon" style={{ marginTop: '0.2rem' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
