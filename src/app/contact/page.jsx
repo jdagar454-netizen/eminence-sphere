@@ -55,8 +55,9 @@ export default function Contact() {
                     <svg viewBox="0 0 18 18"><path d="M16.5 13.5l-2-2a1.4 1.4 0 00-2 0l-1 1C10 12 8 10 7.5 8.5l1-1a1.4 1.4 0 000-2l-2-2a1.4 1.4 0 00-2 0C3 4 3 8.5 8.5 14S14 16.5 15.5 15a1.4 1.4 0 001-1.5z"/></svg>
                   </div>
                   <div>
-                    <div className="contact-detail-label">Phone Number</div>
+                    <div className="contact-detail-label">Phone Numbers</div>
                     <div className="contact-detail-value">+91 63965 82575</div>
+                    <div className="contact-detail-value" style={{ marginTop: "0.25rem" }}>+91 121 315 9030</div>
                   </div>
                 </div>
 
