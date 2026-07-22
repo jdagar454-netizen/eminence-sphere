@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import Script from 'next/script';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import HeroCanvas from '../components/HeroCanvas';
 import AnimatedCounter from '../components/AnimatedCounter';
@@ -74,9 +75,11 @@ export default function Home() {
   return (
     <main>
       {/* Google Jobs Schema JSON-LD */}
-      <script
+      <Script
+        id="job-schema"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jobSchema) }}
+        strategy="afterInteractive"
       />
 
       <ApplyModal

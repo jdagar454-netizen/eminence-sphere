@@ -220,7 +220,7 @@ export default function Dashboard() {
                   </div>
                   <div>
                     <label style={{ fontSize: '0.8rem', fontWeight: 'bold', color: 'var(--text-secondary)', display: 'block', marginBottom: '0.25rem' }}>Phone Number *</label>
-                    <input required type="tel" value={hiringForm.phone} onChange={(e) => setHiringForm({ ...hiringForm, phone: e.target.value })} placeholder="+91 98765 43210" style={{ width: '100%', padding: '0.65rem', background: 'var(--color-bg-2)', border: '1px solid var(--color-border)', borderRadius: 'var(--radius-sm)', color: 'var(--text-primary)', outline: 'none' }} />
+                    <input required type="tel" value={hiringForm.phone} onChange={(e) => setHiringForm({ ...hiringForm, phone: e.target.value })} placeholder="+91 63965 82575" style={{ width: '100%', padding: '0.65rem', background: 'var(--color-bg-2)', border: '1px solid var(--color-border)', borderRadius: 'var(--radius-sm)', color: 'var(--text-primary)', outline: 'none' }} />
                   </div>
                 </div>
 

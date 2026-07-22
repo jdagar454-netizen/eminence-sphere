@@ -102,5 +102,20 @@ export async function submitHiringRequest(requestData) {
   }
 }
 
+// Helper to submit a contact form inquiry
+export async function submitContactInquiry(inquiryData) {
+  try {
+    const docRef = await addDoc(collection(db, 'contact_inquiries'), {
+      ...inquiryData,
+      status: 'New',
+      createdAt: serverTimestamp()
+    });
+    return { success: true, id: docRef.id };
+  } catch (error) {
+    console.error('Error submitting contact inquiry:', error);
+    return { success: false, error: error.message };
+  }
+}
+
 export { app, db, auth };
 

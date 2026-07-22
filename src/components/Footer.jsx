@@ -55,7 +55,7 @@ export default function Footer() {
         </div>
 
         <div className="footer-bottom">
-          <div className="footer-copy">© 2025 Eminence Sphere Consulting &amp; Business Services. All rights reserved. | <Link href="/pipeline" style={{ color: 'var(--purple-primary)', textDecoration: 'underline' }}>Recruitment Pipeline</Link></div>
+          <div className="footer-copy">© 2026 Eminence Sphere Consulting &amp; Business Services. All rights reserved. | <Link href="/pipeline" style={{ color: 'var(--purple-primary)', textDecoration: 'underline' }}>Recruitment Pipeline</Link></div>
           <div className="footer-social">
             <a href="https://www.linkedin.com/in/nikul-chaudhary-b16344412" target="_blank" rel="noopener noreferrer" className="social-link" aria-label="LinkedIn">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: '20px', height: '20px' }}><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>

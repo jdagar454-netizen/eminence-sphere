@@ -1,5 +1,7 @@
+"use client";
 import React, { useState } from 'react';
 import { useScrollReveal } from '../hooks/useScrollReveal';
+import { submitContactInquiry } from '../lib/firebase';
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -36,15 +38,13 @@ export default function ContactForm() {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validate()) {
       setIsSubmitting(true);
-      // Mock submit
-      setTimeout(() => {
-        setIsSubmitting(false);
-        setIsSuccess(true);
-      }, 1200);
+      await submitContactInquiry(formData);
+      setIsSubmitting(false);
+      setIsSuccess(true);
     }
   };
 
