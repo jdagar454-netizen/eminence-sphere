@@ -1,15 +1,90 @@
 "use client";
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import HeroCanvas from '../components/HeroCanvas';
 import AnimatedCounter from '../components/AnimatedCounter';
+import ResumeMatcher from '../components/ResumeMatcher';
+import ApplyModal from '../components/ApplyModal';
+import { fetchActiveJobs } from '../lib/firebase';
 
 export default function Home() {
   useScrollReveal();
+  const [jobs, setJobs] = useState([]);
+  const [selectedJob, setSelectedJob] = useState(null);
+  const [isApplyModalOpen, setIsApplyModalOpen] = useState(false);
+
+  useEffect(() => {
+    async function loadJobs() {
+      const activeJobs = await fetchActiveJobs();
+      setJobs(activeJobs);
+    }
+    loadJobs();
+  }, []);
+
+  const handleOpenApply = (jobTitle) => {
+    setSelectedJob(jobTitle);
+    setIsApplyModalOpen(true);
+  };
+
+  // Google Jobs Structured Data (Schema.org)
+  const jobSchema = {
+    "@context": "https://schema.org/",
+    "@graph": jobs.map((j) => ({
+      "@type": "JobPosting",
+      "title": j.title,
+      "description": j.description,
+      "identifier": {
+        "@type": "PropertyValue",
+        "name": "Eminence Sphere",
+        "value": j.id
+      },
+      "datePosted": "2025-01-01",
+      "validThrough": "2026-12-31",
+      "employmentType": "FULL_TIME",
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Eminence Sphere Consulting & Business Services",
+        "sameAs": "https://www.eminencesphere.online",
+        "logo": "https://www.eminencesphere.online/images/logo.png"
+      },
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "84, Rohta Road",
+          "addressLocality": "Meerut",
+          "addressRegion": "UP",
+          "postalCode": "250502",
+          "addressCountry": "IN"
+        }
+      },
+      "baseSalary": {
+        "@type": "MonetaryAmount",
+        "currency": "INR",
+        "value": {
+          "@type": "QuantitativeValue",
+          "unitText": "MONTH"
+        }
+      }
+    }))
+  };
 
   return (
     <main>
+      {/* Google Jobs Schema JSON-LD */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jobSchema) }}
+      />
+
+      <ApplyModal
+        isOpen={isApplyModalOpen}
+        jobTitle={selectedJob}
+        onClose={() => setIsApplyModalOpen(false)}
+      />
+
       {/* ═══════════════════ HERO ═══════════════════ */}
       <section className="hero" id="hero">
         <HeroCanvas />
@@ -99,7 +174,7 @@ export default function Home() {
       </section>
 
       {/* ═══════════════════ STATS ═══════════════════ */}
-      <section style={{ padding: '0 0 5rem' }}>
+      <section style={{ padding: '0 0 4rem' }}>
         <div className="container">
           <div className="stats-grid reveal">
             <div className="stat-item">
@@ -117,6 +192,55 @@ export default function Home() {
             <div className="stat-item">
               <AnimatedCounter target="5" suffix="+" className="stat-number" />
               <div className="stat-label">Industries Covered</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════ HOT JOBS & RESUME MATCHER ═══════════════════ */}
+      <section className="section" id="resume-matcher-sourcing" style={{ background: 'var(--color-bg-2)', borderTop: '1px solid var(--color-border)', borderBottom: '1px solid var(--color-border)', overflow: 'hidden', padding: '5rem 0' }}>
+        <div className="container">
+          <div className="section-header">
+            <div className="section-tag">Instant Sourcing</div>
+            <h2 className="heading-lg">Hot Job Openings &amp;<br/><span className="text-gold">Smart Resume Matcher</span></h2>
+            <div className="gold-divider"></div>
+            <p>Upload or paste your resume details to check compatibility against our hot vacancies and apply instantly.</p>
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>
+            <ResumeMatcher jobs={jobs} onApplyClick={handleOpenApply} />
+
+            {/* LIVE JOB CARDS GRID */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2rem' }}>
+              {jobs.map((job) => (
+                <div key={job.id} className="card" style={{ padding: '2rem', display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'space-between', border: '1px solid var(--color-border)', boxShadow: 'var(--shadow-card)' }}>
+                  <div>
+                    <span style={{ fontSize: '0.75rem', fontWeight: 'bold', color: 'var(--purple-primary)', textTransform: 'uppercase', letterSpacing: '0.08em', display: 'inline-block', marginBottom: '0.5rem' }}>
+                      {job.category}
+                    </span>
+                    <h3 className="heading-md" style={{ marginBottom: '0.5rem' }}>{job.title}</h3>
+                    <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginBottom: '1rem', display: 'flex', gap: '0.75rem' }}>
+                      <span>📍 {job.location}</span>
+                      <span>💼 {job.type}</span>
+                    </div>
+                    <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', lineHeight: 1.6, marginBottom: '1.5rem' }}>
+                      {job.description}
+                    </p>
+                  </div>
+                  <div>
+                    <div style={{ fontSize: '1.125rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '1.25rem', borderTop: '1px solid var(--color-border)', paddingTop: '1rem' }}>
+                      {job.salary}
+                    </div>
+                    <button
+                      onClick={() => handleOpenApply(job.title)}
+                      className="btn btn-primary"
+                      style={{ width: '100%', padding: '0.85rem', justifyContent: 'center', fontWeight: 700 }}
+                    >
+                      Apply Instantly
+                    </button>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
