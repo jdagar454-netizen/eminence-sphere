@@ -121,15 +121,28 @@ export default function Contact() {
                 <div style={{ fontSize: "0.875rem", color: "var(--text-secondary)" }}>84, Rohta Road, Meerut, Uttar Pradesh, IN 250502</div>
               </div>
             </div>
-            {/* Decorative map placeholder */}
-            <div style={{ height: "320px", background: "linear-gradient(135deg,var(--navy-light) 0%,var(--navy-mid) 100%)", display: "flex", alignItems: "center", justifyContent: "center", position: "relative", overflow: "hidden" }}>
-              <div style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle at 2px 2px,rgba(201,168,76,0.1) 1px,transparent 0)", backgroundSize: "36px 36px" }}></div>
-              <div style={{ position: "relative", zIndex: 1, textAlign: "center" }}>
-                <div style={{ width: "64px", height: "64px", background: "var(--gold-gradient)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 1rem", boxShadow: "0 0 40px rgba(201,168,76,0.4)" }}>
-                  <svg width="28" height="28" viewBox="0 0 18 18" fill="none" stroke="#07091C" strokeWidth="1.5" strokeLinecap="round"><path d="M9 1C5.7 1 3 3.7 3 7c0 4.4 6 10 6 10s6-5.6 6-10c0-3.3-2.7-6-6-6zm0 8a2 2 0 110-4 2 2 0 010 4z"/></svg>
-                </div>
-                <div style={{ fontFamily: "var(--font-heading)", fontSize: "1.25rem", fontWeight: 600, marginBottom: "0.25rem" }}>Eminence Sphere HQ</div>
-                <div style={{ color: "var(--text-secondary)", fontSize: "0.875rem" }}>84, Rohta Road, Meerut, Uttar Pradesh, IN 250502</div>
+            {/* Interactive Google Map */}
+            <div style={{ position: 'relative', width: '100%', height: '360px', borderTop: '1px solid var(--color-border)' }}>
+              <iframe
+                title="Eminence Sphere HQ Location"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3490.875601248102!2d77.674932!3d28.961011!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjji44KwNTcnMzkuNiJOIDc344KwNDAnMjkuOCJF!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+                width="100%"
+                height="100%"
+                style={{ border: 0, filter: 'grayscale(0.2) contrast(1.1)' }}
+                allowFullScreen=""
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              ></iframe>
+              <div style={{ position: 'absolute', bottom: '1.25rem', right: '1.25rem', zIndex: 10 }}>
+                <a
+                  href="https://maps.google.com/?q=84+Rohta+Road+Meerut+Uttar+Pradesh+IN+250502"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-primary"
+                  style={{ padding: '0.65rem 1.25rem', fontSize: '0.85rem', fontWeight: 'bold', boxShadow: '0 4px 15px rgba(0,0,0,0.4)' }}
+                >
+                  📍 Get Directions on Google Maps
+                </a>
               </div>
             </div>
           </div>

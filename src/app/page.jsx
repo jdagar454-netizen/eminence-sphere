@@ -328,6 +328,24 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ═══════════════════ CORPORATE PARTNERS CAROUSEL ═══════════════════ */}
+      <section style={{ padding: '3.5rem 0', background: 'var(--color-bg-2)', borderTop: '1px solid var(--color-border)', borderBottom: '1px solid var(--color-border)' }}>
+        <div className="container">
+          <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+            <span style={{ fontSize: '0.75rem', fontWeight: 'bold', color: 'var(--purple-primary)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Top Talent Placement Destinations</span>
+            <h3 style={{ fontSize: '1.25rem', fontWeight: '700', color: 'var(--text-primary)', marginTop: '0.25rem' }}>Trusted by Leading Corporate &amp; BPO Brands</h3>
+          </div>
+          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', gap: '2rem 3.5rem', opacity: 0.85 }}>
+            <div style={{ fontWeight: '800', fontSize: '1.25rem', letterSpacing: '-0.02em', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>🏢 Teleperformance</div>
+            <div style={{ fontWeight: '800', fontSize: '1.25rem', letterSpacing: '-0.02em', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>🌐 Tech Mahindra</div>
+            <div style={{ fontWeight: '800', fontSize: '1.25rem', letterSpacing: '-0.02em', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>⚡ Genpact</div>
+            <div style={{ fontWeight: '800', fontSize: '1.25rem', letterSpacing: '-0.02em', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>🎯 Concentrix</div>
+            <div style={{ fontWeight: '800', fontSize: '1.25rem', letterSpacing: '-0.02em', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>💎 WNS Global</div>
+            <div style={{ fontWeight: '800', fontSize: '1.25rem', letterSpacing: '-0.02em', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>🚀 HCLTech</div>
+          </div>
+        </div>
+      </section>
+
       {/* ═══════════════════ WHY CHOOSE US ═══════════════════ */}
       <section className="section" style={{ background: 'linear-gradient(180deg, transparent 0%, rgba(13,18,48,0.5) 100%)' }} id="why-us">
         <div className="container">
